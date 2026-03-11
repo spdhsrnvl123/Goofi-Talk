@@ -9,8 +9,9 @@
 | 구분 | URL |
 |------|-----|
 | **운영 서비스** | [chatbot.con.or.kr](http://chatbot.con.or.kr) |
+| **운영 관리자** | [chatbot.con.or.kr/admin](http://chatbot.con.or.kr/admin) |
 | **최신 버전 (Vercel)** | [chatbot-taupe-two-95.vercel.app](https://chatbot-taupe-two-95.vercel.app) |
-| **관리자 대시보드** | [chatbot-taupe-two-95.vercel.app/admin](https://chatbot-taupe-two-95.vercel.app/admin) |
+| **Vercel 관리자** | [chatbot-taupe-two-95.vercel.app/admin](https://chatbot-taupe-two-95.vercel.app/admin) |
 
 <br/>
 
