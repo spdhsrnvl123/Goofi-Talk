@@ -218,30 +218,30 @@
 ---
 
 ## Architecture
-<img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/43394298-ccdc-4351-8b51-01e072f25737" />
+<img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/82303410-5f59-41db-9e3a-6be091de6a73" />
 
 
 ---
 
 ## Technical Decisions
 
-> 각 의사결정의 **문제 -- 고려한 방안 -- 결정 -- 결과**는 **[TECHNICAL_DECISIONS.md](./TECHNICAL_DECISIONS.md)** 에서 확인할 수 있습니다.
+> 각 의사결정의 **문제 -- 고려한 방안 -- 결정 -- 결과**는 **[기술_설계_노트.md](./기술_설계_노트.md)** 에서 확인할 수 있습니다.
 
 | 의사결정 | 문제 | 해결 | 결과 |
 |:---------|:-----|:-----|:-----|
-| [4단계 스마트 검색](./TECHNICAL_DECISIONS.md#1-4단계-스마트-검색-설계) | AI 전수 처리 시 비용 폭증 | 규칙 기반 3단계 + AI Fallback 4단계 | 1~3단계 ~100ms, AI 호출 비용 대폭 절약 |
-| [한글 초성 검색](./TECHNICAL_DECISIONS.md#2-한글-초성-검색-알고리즘-직접-구현) | `ㅅㄱ` -> `수강신청` 매칭 불가 | 유니코드 수학 공식 직접 구현 (59줄, 의존성 0) | 한글 11,172자 완벽 지원 |
-| [5-Store 분리 설계](./TECHNICAL_DECISIONS.md#3-zustand-5-store-분리-설계) | 단일 스토어에서 불필요한 리렌더링 | Zustand 도메인별 분리 + 셀렉터 훅 | `isTyping` 변경 시 MessageBubble만 리렌더 |
-| [Tree Diff/Save](./TECHNICAL_DECISIONS.md#4-tree-diffsave-패턴-faq-편집-최적화) | FAQ 1개 수정에 1000개 쿼리 발생 | Git 스타일 diff 알고리즘 | 변경분만 DB 반영 (쿼리 1개) |
-| [RAG + 멀티테넌트 격리](./TECHNICAL_DECISIONS.md#5-rag--멀티테넌트-격리) | 멀티테넌트 AI 데이터 격리 | 회사별 FAQ 동적 주입 + 6중 보안 계층 | 회사 추가 시 코드 수정 0 |
-| [Supabase 폴백](./TECHNICAL_DECISIONS.md#6-supabase-폴백--on-demand-지연-로딩) | 서버 장애 시 서비스 중단 | 정적 데이터 자동 폴백 + 2단계 지연 로딩 | Zero-downtime 보장 |
-| [번들 최적화](./TECHNICAL_DECISIONS.md#7-vite-번들-최적화) | 챗봇 유저가 Admin 코드까지 로드 | React.lazy + Vite manualChunks | ~58% 번들 크기 절감 |
+| [4단계 스마트 검색](./기술_설계_노트.md#1-4단계-스마트-검색-설계) | AI 전수 처리 시 비용 폭증 | 규칙 기반 3단계 + AI Fallback 4단계 | 1~3단계 ~100ms, AI 호출 비용 대폭 절약 |
+| [한글 초성 검색](./기술_설계_노트.md#2-한글-초성-검색-알고리즘-직접-구현) | `ㅅㄱ` -> `수강신청` 매칭 불가 | 유니코드 수학 공식 직접 구현 (59줄, 의존성 0) | 한글 11,172자 완벽 지원 |
+| [5-Store 분리 설계](./기술_설계_노트.md#3-zustand-5-store-분리-설계) | 단일 스토어에서 불필요한 리렌더링 | Zustand 도메인별 분리 + 셀렉터 훅 | `isTyping` 변경 시 MessageBubble만 리렌더 |
+| [Tree Diff/Save](./기술_설계_노트.md#4-tree-diffsave-패턴-faq-편집-최적화) | FAQ 1개 수정에 1000개 쿼리 발생 | Git 스타일 diff 알고리즘 | 변경분만 DB 반영 (쿼리 1개) |
+| [RAG + 멀티테넌트 격리](./기술_설계_노트.md#5-rag--멀티테넌트-격리) | 멀티테넌트 AI 데이터 격리 | 회사별 FAQ 동적 주입 + 6중 보안 계층 | 회사 추가 시 코드 수정 0 |
+| [Supabase 폴백](./기술_설계_노트.md#6-supabase-폴백--on-demand-지연-로딩) | 서버 장애 시 서비스 중단 | 정적 데이터 자동 폴백 + 2단계 지연 로딩 | Zero-downtime 보장 |
+| [번들 최적화](./기술_설계_노트.md#7-vite-번들-최적화) | 챗봇 유저가 Admin 코드까지 로드 | React.lazy + Vite manualChunks | ~58% 번들 크기 절감 |
 
 ---
 
 ## AI-Powered Development
 
-> 상세 내용: [TECHNICAL_DECISIONS.md #8](./TECHNICAL_DECISIONS.md#8-ai-기반-개발-프로세스)
+> 상세 내용: [기술_설계_노트.md #8](./기술_설계_노트.md#8-ai-기반-개발-프로세스)
 
 이 프로젝트는 **Claude Code** + **Shrimp Task MCP**를 활용한 AI 기반 개발 워크플로우로 진행했습니다. 핵심은 AI가 프로젝트의 컨벤션을 정확히 준수하도록 **600줄 이상의 규칙 파일을 시스템화**한 것입니다.
 
