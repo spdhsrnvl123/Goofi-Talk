@@ -1,473 +1,524 @@
-# Goofi Talk — AI FAQ 챗봇 SaaS 플랫폼
+<p align="center">
+  <img src="https://img.shields.io/badge/Goofi_Talk-AI_FAQ_Chatbot_SaaS-000000?style=for-the-badge&labelColor=000000" alt="Goofi Talk" height="40" />
+</p>
 
-> 멀티테넌트 AI FAQ 챗봇 SaaS — 서브도메인 기반 회사 전환, 4단계 스마트 검색(AI Fallback 포함), 관리자 대시보드를 제공하는 SPA 웹 애플리케이션
+<p align="center">
+  <strong>Multi-tenant AI FAQ Chatbot SaaS Platform</strong><br/>
+  <sub>subdomain-based company routing | 4-step smart search with AI Fallback | admin dashboard</sub>
+</p>
 
-<br/>
+<p align="center">
+  <img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript_5.9-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Claude_API-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude AI" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Vite_7-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white" alt="Playwright" />
+  <img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare" />
+</p>
 
-## 링크
+<p align="center">
+  <a href="https://chatbot-taupe-two-95.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>&nbsp;
+  <a href="https://goofitalk.co.kr"><img src="https://img.shields.io/badge/Landing_Page-06B6D4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Landing Page" /></a>&nbsp;
+  <a href="https://chatbot-taupe-two-95.vercel.app/admin"><img src="https://img.shields.io/badge/Admin_Page-8B5CF6?style=for-the-badge&logo=shield&logoColor=white" alt="Admin Page" /></a>
+</p>
 
-| 구분                   | URL                                                                                    |
-| ---------------------- | -------------------------------------------------------------------------------------- |
-| **랜딩 페이지**        | [goofistalk.com](https://goofitalk.com)                                               |
-| **서비스 신청**        | [goofistalk.com/apply](https://goofitalk.com/apply)                                   |
-| **최신 버전 (Vercel)** | [chatbot-taupe-two-95.vercel.app](https://chatbot-taupe-two-95.vercel.app)             |
-| **Vercel 관리자**      | [chatbot-taupe-two-95.vercel.app/admin](https://chatbot-taupe-two-95.vercel.app/admin) |
+---
 
-<br/>
+## Overview
 
-## 프로젝트 소개
+**Goofi Talk**은 기업 고객센터의 반복 FAQ 문의를 줄이기 위해 기획부터 배포까지 **1인 풀스택으로 개발**한 AI FAQ 챗봇 SaaS 플랫폼입니다.
 
-**Goofi Talk**은 기업 고객센터의 반복 FAQ 문의를 줄이기 위해 **기획부터 배포까지 1인 풀스택으로 개발**한 AI FAQ 챗봇 SaaS 플랫폼입니다.
+서브도메인 기반 멀티테넌트 구조로 하나의 코드베이스에서 여러 회사에 독립적인 FAQ 챗봇 서비스를 제공합니다. 기존 3단계 규칙 기반 검색에 Claude AI Fallback을 추가하여, 매칭 실패 시에도 AI가 FAQ 컨텍스트를 바탕으로 자연어 답변을 생성합니다.
 
-서브도메인 기반 멀티테넌트 구조로 하나의 코드베이스에서 여러 회사에 독립적인 FAQ 챗봇 서비스를 제공합니다. 기존 3단계 규칙 기반 검색에 **Claude AI Fallback**을 추가하여, 매칭 실패 시에도 AI가 FAQ 컨텍스트를 바탕으로 자연어 답변을 생성합니다.
+> <!-- 아래에 실제 스크린샷 또는 GIF를 삽입하세요 -->
+> **[TODO]** 챗봇 동작 화면 GIF 또는 스크린샷 삽입
+>
+> ```
+> 권장 구성: 챗봇 대화 화면 + 관리자 대시보드 + 모바일 반응형
+> 도구 추천: Kap(macOS) / ScreenToGif(Windows) / Chrome DevTools Recorder
+> ```
 
-### 해결한 문제
+---
 
-| 문제                               | 해결 방법                                                          |
-| ---------------------------------- | ------------------------------------------------------------------ |
-| 반복 FAQ 문의로 인한 고객센터 부하 | 대화형 챗봇으로 셀프 서비스 지원                                   |
-| 비개발자의 콘텐츠 관리 어려움      | 드래그 앤 드롭 기반 FAQ CRUD 관리자 페이지 제공                    |
-| 단순 키워드 검색의 낮은 정확도     | 4단계 검색 + 한글 초성 검색 + AI Fallback으로 검색 품질 향상       |
-| Supabase 장애 시 서비스 중단 위험  | 정적 데이터 자동 폴백 + On-demand 지연 로딩으로 무중단 서비스 보장 |
-| 단일 고객사 한정 서비스            | 서브도메인 기반 멀티테넌트 SaaS로 확장                             |
+## Table of Contents
 
-### 주요 특징
+- [Problem & Solution](#problem--solution)
+- [Key Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Technical Deep Dive](#technical-deep-dive)
+- [AI-Powered Development](#ai-powered-development)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
 
-- **4단계 스마트 검색** — 질문 전문 검색 → 서브카테고리 키워드 → 카테고리 키워드 → AI Fallback 순으로 최적의 결과 제공
-- **AI Fallback (Claude API)** — 규칙 기반 검색 실패 시 Supabase Edge Function을 통해 Claude API + RAG 패턴으로 자연어 답변 생성
-- **한글 초성 검색** — `ㅅㄱ` 입력만으로 `수강신청` 관련 질문 검색 가능
-- **멀티테넌트 SaaS** — 서브도메인 기반 회사 전환 (`aifa.goofistalk.com`), 회사별 독립 FAQ/설정/분석
-- **관리자 대시보드** — FAQ CRUD, 드래그 앤 드롭 정렬, AI 설정, 검색/클릭 분석, 실시간 챗봇 미리보기
-- **슈퍼관리자** — 전체 회사 관리, 서비스 신청 승인/거절, 회사간 전환
-- **관리자 테마** — Mauve/Blue/Dark 3종 CSS 변수 런타임 전환
-- **오프라인 폴백** — Supabase 연결 실패 시 정적 FAQ 데이터로 자동 전환
-- **서비스 신청 페이지** — 비개발자도 직접 회사를 등록하고 챗봇을 시작할 수 있는 셀프 서비스
-- **테스트 커버리지** — Vitest 기반 단위 테스트로 핵심 로직(초성 검색, Tree Diff) 검증
-- **접근성(A11y)** — ARIA role/label 적용, 시맨틱 마크업으로 스크린 리더 지원
+---
 
-<br/>
+## Problem & Solution
 
-## 스크린샷
+| Problem | Solution | Impact |
+|:--------|:---------|:-------|
+| 반복 FAQ 문의로 인한 고객센터 부하 | 대화형 챗봇 셀프 서비스 | CS 인력 의존도 감소 |
+| 비개발자의 콘텐츠 관리 어려움 | Drag & Drop FAQ CRUD 관리자 페이지 | 운영자 자율 관리 가능 |
+| 단순 키워드 검색의 낮은 정확도 | 4단계 검색 + 한글 초성 검색 + AI Fallback | 검색 커버리지 극대화 |
+| Supabase 장애 시 서비스 중단 | 정적 데이터 자동 폴백 + On-demand 지연 로딩 | Zero-downtime 보장 |
+| 단일 고객사 한정 서비스 | 서브도메인 기반 멀티테넌트 SaaS | N개 회사 동시 서비스 |
 
-> 챗봇 메인 화면
+---
 
-<!-- 스크린샷 추가 예정: 챗봇 메인 UI -->
+## Key Features
 
-> 관리자 대시보드 — FAQ 관리
+<table>
+  <tr>
+    <td width="50%">
+      <img src="https://img.shields.io/badge/-Core-3178C6?style=flat-square" alt="Core" /><br/>
+      <strong>4-Step Smart Search</strong><br/>
+      질문 전문 검색 → 서브카테고리 키워드 → 카테고리 키워드 → AI Fallback
+    </td>
+    <td width="50%">
+      <img src="https://img.shields.io/badge/-AI-D97757?style=flat-square" alt="AI" /><br/>
+      <strong>AI Fallback (Claude API)</strong><br/>
+      검색 실패 시 Edge Function + RAG로 자연어 답변 생성
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://img.shields.io/badge/-Search-10B981?style=flat-square" alt="Search" /><br/>
+      <strong>Korean Chosung Search</strong><br/>
+      <code>ㅅㄱ</code> 입력만으로 <code>수강신청</code> 관련 질문 검색 가능
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/-SaaS-8B5CF6?style=flat-square" alt="SaaS" /><br/>
+      <strong>Multi-Tenant SaaS</strong><br/>
+      서브도메인 기반 회사 전환, 회사별 독립 FAQ / 설정 / 분석
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://img.shields.io/badge/-Admin-F59E0B?style=flat-square" alt="Admin" /><br/>
+      <strong>Admin Dashboard</strong><br/>
+      FAQ CRUD, DnD 정렬, AI 설정, 검색/클릭 분석, 실시간 미리보기
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/-Resilience-EF4444?style=flat-square" alt="Resilience" /><br/>
+      <strong>Offline Fallback</strong><br/>
+      Supabase 연결 실패 시 정적 FAQ 데이터로 자동 전환
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://img.shields.io/badge/-Embed-0EA5E9?style=flat-square" alt="Embed" /><br/>
+      <strong>Widget Embed</strong><br/>
+      설정 페이지에서 삽입 코드 자동 생성, 위치 커스터마이징
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/-Test-2EAD33?style=flat-square" alt="Test" /><br/>
+      <strong>E2E Testing</strong><br/>
+      Playwright 21개 테스트 (챗봇 플로우, 관리자 인증, Smoke)
+    </td>
+  </tr>
+</table>
 
-<!-- 스크린샷 추가 예정: FAQ CRUD 관리 화면 -->
+---
 
-> 관리자 대시보드 — 분석
+## Tech Stack
 
-<!-- 스크린샷 추가 예정: 검색 통계 차트 -->
+<table>
+  <tr>
+    <td align="center" width="140">
+      <img src="https://img.shields.io/badge/-Frontend-61DAFB?style=for-the-badge" alt="Frontend" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" />
+      <img src="https://img.shields.io/badge/TypeScript_5.9-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+      <img src="https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" />
+      <img src="https://img.shields.io/badge/shadcn/ui-000000?style=flat-square&logo=shadcnui&logoColor=white" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-State-764ABC?style=for-the-badge" alt="State" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/Zustand_5-764ABC?style=flat-square&logo=npm&logoColor=white" />
+      <sub>(5 independent stores)</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-Backend-3FCF8E?style=for-the-badge" alt="Backend" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white" />
+      <sub>(PostgreSQL + Auth + Storage + Edge Functions)</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-AI-D97757?style=for-the-badge" alt="AI" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/Claude_API-D97757?style=flat-square&logo=anthropic&logoColor=white" />
+      <sub>(Edge Function <code>chat-ai</code> + RAG)</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-Build-646CFF?style=for-the-badge" alt="Build" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/Vite_7-646CFF?style=flat-square&logo=vite&logoColor=white" />
+      <img src="https://img.shields.io/badge/React_Router_v7-CA4245?style=flat-square&logo=reactrouter&logoColor=white" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-Testing-2EAD33?style=for-the-badge" alt="Testing" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/Vitest-6E9F18?style=flat-square&logo=vitest&logoColor=white" />
+      <img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-Infra-F38020?style=for-the-badge" alt="Infra" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white" />
+      <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-Libraries-FF6F61?style=for-the-badge" alt="Libraries" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/TipTap-1a1a2e?style=flat-square&logo=tiptap&logoColor=white" />
+      <img src="https://img.shields.io/badge/dnd--kit-1a1a2e?style=flat-square" />
+      <img src="https://img.shields.io/badge/Recharts-22B5BF?style=flat-square" />
+      <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white" />
+      <img src="https://img.shields.io/badge/DOMPurify-1a1a2e?style=flat-square" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/-Dev_Tools-191919?style=for-the-badge" alt="Dev Tools" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=anthropic&logoColor=white" />
+      <img src="https://img.shields.io/badge/Shrimp_Task_MCP-191919?style=flat-square" />
+      <img src="https://img.shields.io/badge/Husky-1a1a2e?style=flat-square&logo=git&logoColor=white" />
+      <img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white" />
+    </td>
+  </tr>
+</table>
 
-> 랜딩 페이지 — Goofi Talk 서비스 소개
+---
 
-<!-- 스크린샷 추가 예정: 랜딩 페이지 -->
-
-<br/>
-
-## 기술 스택
-
-| 구분             | 기술                                                    |
-| ---------------- | ------------------------------------------------------- |
-| **프론트엔드**   | React 19, TypeScript, Tailwind CSS v4                   |
-| **상태 관리**    | Zustand 5 (5개 독립 스토어)                             |
-| **백엔드 / DB**  | Supabase (PostgreSQL + Auth + Storage + Edge Functions) |
-| **AI**           | Anthropic Claude API (Supabase Edge Function `chat-ai`) |
-| **라우팅**       | React Router v7 (Lazy Loading)                          |
-| **리치 텍스트**  | TipTap (StarterKit + Underline + Color + Link + Image)  |
-| **DnD**          | @dnd-kit/core, @dnd-kit/sortable                        |
-| **차트**         | Recharts                                                |
-| **애니메이션**   | framer-motion (랜딩 페이지)                             |
-| **타이포그래피** | @tailwindcss/typography (AI 답변 렌더링)                |
-| **HTML 보안**    | DOMPurify (XSS 방어)                                    |
-| **테스트**       | Vitest                                                  |
-| **빌드**         | Vite                                                    |
-| **배포**         | Vercel / SCP (운영 서버 직접 배포)                      |
-
-<br/>
-
-## 아키텍처
+## Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                     사용자 (브라우저)                           │
-│   서브도메인 접속 → getSubdomainSlug() → companySlug 결정       │
-│   ├─ companySlug 있음 → ChatbotWrapper (챗봇)                  │
-│   └─ companySlug 없음 → LandingPage (서비스 소개)               │
-└───────────────────────┬──────────────────────────────────────┘
-                        │
-                        ▼
-┌──────────────────────────────────────────────────────────────┐
-│                   React SPA (Vite)                            │
-│                                                              │
-│  ┌───────────┐  ┌──────────────┐  ┌──────────┐              │
-│  │messageStore│  │navigationStore│  │searchStore│              │
-│  │  (메시지)  │  │  (탐색 위치)  │  │(검색 결과)│              │
-│  └─────┬─────┘  └──────┬───────┘  └─────┬────┘              │
-│        └───────────────┼────────────────┘                    │
-│                        ▼                                     │
-│           useChatHandlers (이벤트 조율)                        │
-│           useChatSearch  (3단계 규칙 검색)                     │
-│           handleSend     (4단계 AI Fallback)                  │
-│           useChatMessage (타이핑 애니메이션)                    │
-│                                                              │
-│  ┌─────────────────────────────────────────────────────────┐ │
-│  │              관리자 페이지 (/admin)                        │ │
-│  │  FAQ CRUD · DnD 정렬 · AI 설정 · 분석 대시보드            │ │
-│  │  회사 관리 (슈퍼관리자) · 테마 전환 · 회사 설정            │ │
-│  │  역할: superadmin > admin > viewer                       │ │
-│  └─────────────────────────────────────────────────────────┘ │
-│                                                              │
-│  ┌─────────────────────────────────────────────────────────┐ │
-│  │              공개 페이지                                  │ │
-│  │  랜딩 페이지 (/) · 서비스 신청 (/apply)                   │ │
-│  └─────────────────────────────────────────────────────────┘ │
-└───────────────────────┬──────────────────────────────────────┘
-                        │
-                        ▼
-┌──────────────────────────────────────────────────────────────┐
-│                     Supabase                                  │
-│  PostgreSQL (FAQ, 회사, 서비스 신청, 검색 로그, 클릭 분석)     │
-│  Auth (관리자 인증, 역할: superadmin/admin/viewer)             │
-│  Storage (이미지 업로드)                                      │
-│                                                              │
-│  Edge Functions:                                             │
-│  ├── chat-ai           (RAG + Claude API, JWT 없음)           │
-│  ├── signup-with-company (서비스 신청 처리, JWT 없음)           │
-│  └── list-company-users  (사용자 목록, JWT 필요)               │
-│                                                              │
-│  연결 실패 시 → src/data/faq/ 정적 데이터 자동 폴백            │
-└──────────────────────────────────────────────────────────────┘
+Cloudflare (DNS / SSL / CDN / DDoS Protection)
+*.goofitalk.co.kr --> subdomain routing
+         |
+         v
++------------------+          +-----------------------------------+
+|   Browser        |          |   React SPA (Vite 7)              |
+|                  |          |                                   |
+|  subdomain       |--------->|   Chatbot        Admin (/admin)   |
+|  detection       |          |   - messageStore - FAQ CRUD       |
+|                  |          |   - navStore     - DnD Sort        |
+|  aifa.goofitalk  |          |   - searchStore  - AI Settings    |
+|  .co.kr          |          |                  - Analytics      |
++------------------+          |                  - Role: super    |
+                              |                    admin/admin    |
+                              |                    /viewer        |
+                              +--------+----------+---------------+
+                                       |          |
+                              +--------v----------v---------------+
+                              |   Supabase                        |
+                              |                                   |
+                              |   PostgreSQL  Auth  Storage        |
+                              |                                   |
+                              |   Edge Functions:                  |
+                              |   +-- chat-ai (RAG + Claude API)  |
+                              |   +-- signup-with-company          |
+                              |   +-- list-company-users           |
+                              |                                   |
+                              |   Connection fail --> static       |
+                              |   fallback (src/data/faq/)         |
+                              +-----------------------------------+
 ```
 
-<br/>
+---
 
-## 기술적 도전
+## Technical Deep Dive
 
-### 1. 한글 초성 검색 구현
+### 1. Korean Chosung Search
 
-한글 유니코드 구조(`AC00` ~ `D7A3`)를 분석해 초성을 추출하는 알고리즘을 직접 구현했습니다.
+한글 유니코드 구조(`AC00` ~ `D7A3`)를 분석하여 초성 추출 알고리즘을 직접 구현했습니다.
 
 ```
-유니코드 공식: (초성 × 21 + 중성) × 28 + 종성 + 0xAC00
+Unicode Formula: (chosung x 21 + jungsung) x 28 + jongsung + 0xAC00
 
-"수강신청" → 초성 추출 → "ㅅㄱㅅㅊ"
-사용자 입력 "ㅅㄱ" → 전방 매칭으로 검색 성공
+"수강신청" --> chosung extraction --> "ㅅㄱㅅㅊ"
+User input "ㅅㄱ" --> prefix matching --> search success
 ```
 
 단순 `includes()` 비교가 아닌 유니코드 오프셋 계산을 통해, 한글 자음 입력만으로도 자연스러운 검색을 지원합니다.
 
-### 2. DisplayType 기반 선언적 UI 렌더링
+### 2. DisplayType-Based Declarative UI
 
-봇 메시지에 `displayType` 필드를 두어, 메시지 아래에 렌더링할 UI 컴포넌트를 **데이터로 선언**하는 패턴을 설계했습니다. 조건 분기 없이 메시지 상태만 변경하면 UI가 자동 전환됩니다.
+봇 메시지에 `displayType` 필드를 두어, 렌더링할 UI 컴포넌트를 데이터로 선언하는 패턴을 설계했습니다.
 
 ```typescript
-// displayType 하나로 렌더링 컴포넌트 결정
 addBotMessage({ text: "카테고리를 선택하세요", displayType: "menu" });
-addBotMessage({ text: "검색 결과입니다", displayType: "searchResults" });
-addBotMessage({ text: aiAnswer, displayType: "aiAnswer", isAiResponse: true });
+addBotMessage({ text: "검색 결과입니다",       displayType: "searchResults" });
+addBotMessage({ text: aiAnswer,              displayType: "aiAnswer", isAiResponse: true });
 ```
 
-**왜 이 패턴을 선택했나?**
+**Why this pattern?**
+채팅 UI에서 메시지마다 다른 UI를 렌더링해야 하는 상황에서, `if/switch` 분기 대신 `displayType`을 데이터로 선언하면 새 UI 유형 추가 시 컴포넌트 매핑만 추가하면 됩니다. `clearAllDisplayTypes()` 패턴으로 항상 최신 메시지만 인터랙티브하게 유지합니다.
 
-- 채팅 UI 특성상 메시지마다 다른 UI를 렌더링해야 하는데, `if/switch` 분기가 늘어나면 유지보수가 어려워짐
-- `displayType`을 데이터로 선언하면, 새 UI 유형 추가 시 컴포넌트만 매핑하면 됨
-- 이전 메시지의 UI를 숨기는 `clearAllDisplayTypes()` 패턴으로, 항상 최신 메시지만 인터랙티브하게 유지
+### 3. Zustand 5-Store Architecture
 
-### 3. Zustand 5-Store 분리 설계
+| Approach | Problem |
+|:---------|:--------|
+| Single global store | 메시지 추가 시 검색/네비게이션 컴포넌트까지 리렌더링 |
+| Context API | 빈번한 상태 변경(타이핑 애니메이션 등)에서 성능 병목 |
+| **Role-based 5-Store** | 각 스토어 변경이 해당 구독자만 리렌더링 **(adopted)** |
 
-**왜 5개로 분리했나?**
+셀렉터 훅(`useMessages()`, `useIsTyping()` 등)을 통해 특정 필드만 구독하여 fine-grained subscription을 실현했습니다.
 
-| 고려한 방안        | 문제점                                               |
-| ------------------ | ---------------------------------------------------- |
-| 단일 전역 스토어   | 메시지 추가 시 검색/네비게이션 컴포넌트까지 리렌더링 |
-| Context API        | 빈번한 상태 변경(타이핑 애니메이션 등)에서 성능 병목 |
-| **역할별 5-Store** | 각 스토어 변경이 해당 구독자만 리렌더링 (채택)       |
-
-```
-messageStore     → 채팅 메시지, 타이핑 상태 (변경 빈도: 높음)
-navigationStore  → 현재 카테고리/서브카테고리 (변경 빈도: 중간)
-searchStore      → 검색 결과, 필터된 카테고리 (변경 빈도: 낮음)
-faqDataStore     → FAQ 데이터, companyId, 추천검색어 (on-demand 갱신)
-companyStore     → 회사 설정, AI 활성화 여부 (마운트 시 1회)
-```
-
-셀렉터 훅(`useMessages()`, `useIsTyping()` 등)을 통해 스토어의 특정 필드만 구독하여, Zustand의 **세밀한 구독(fine-grained subscription)** 기능을 최대한 활용했습니다.
-
-### 4. Supabase 폴백 + On-demand 지연 로딩
-
-#### 폴백 설계
-
-외부 DB 의존성으로 인한 서비스 중단 위험을 낮추기 위해, Supabase 연결 실패 시 번들에 포함된 정적 데이터로 자동 전환하도록 설계했습니다.
+### 4. Supabase Fallback + On-demand Loading
 
 ```
 fetchFaqData()
-  ├─ 성공 → Supabase DB 데이터 사용
-  └─ 실패 → src/data/faq/ 정적 데이터 자동 전환 (서비스 중단 없음)
+  |-- Success --> use Supabase DB data
+  +-- Failure --> auto-switch to src/data/faq/ (zero downtime)
+
+Lazy Loading:
+  Initial  : fetch category list only (lightweight)
+  On click : fetch subcategories + questions on-demand
+  On search: server-side search, return only matched results
 ```
 
-#### On-demand 지연 로딩
+### 5. Tree Diff/Save Pattern
 
-초기 로드 시 전체 FAQ 데이터를 한 번에 가져오지 않고, **카테고리 선택 시 해당 서브카테고리와 질문만 로드**하는 지연 로딩 패턴을 구현했습니다.
-
-```
-초기 로드: 카테고리 목록만 fetch (경량)
-카테고리 클릭 → 해당 서브카테고리 + 질문 on-demand fetch
-검색 시 → 서버사이드 검색으로 필요한 결과만 반환
-```
-
-**트레이드오프**: 네트워크 요청 횟수는 증가하지만, 초기 페이지 로드 속도와 메모리 사용량을 개선했습니다.
-
-### 5. Tree Diff/Save 패턴
-
-관리자 FAQ 편집은 트리 구조(카테고리 → 서브카테고리 → 질문)를 다루는데, 매 수정마다 전체 트리를 DB에 저장하면 불필요한 쿼리가 발생합니다.
-
-이를 해결하기 위해 **메모리 내 트리 조작 → 저장 시 diff 계산 → 최소 쿼리 실행** 패턴을 구현했습니다.
+매 수정마다 전체 트리를 DB에 저장하면 불필요한 쿼리가 발생합니다. 메모리 내 트리 조작 후 저장 시 diff를 계산하여 최소 쿼리만 실행합니다.
 
 ```typescript
-// 1. 편집은 메모리 내 트리에서 수행
-const editedTree = [...originalTree]; // 사용자가 자유롭게 수정
+// 1. Edit in-memory tree
+const editedTree = [...originalTree];
 
-// 2. 저장 시 원본과 비교하여 변경분만 추출
+// 2. Compute diff on save
 const diff = computeTreeDiff(originalTree, editedTree);
-// → { created: [...], updated: [...], deleted: [...] }
+// --> { created: [...], updated: [...], deleted: [...] }
 
-// 3. 변경분만 DB에 반영 (임시 ID는 INSERT 후 실제 ID로 교체)
+// 3. Apply only changes to DB
 await saveTreeDiff(diff);
 ```
 
-**핵심 설계**:
-
-- 임시 ID(`temp_*`) 체계로 새 항목과 기존 항목을 구분
-- 순서 변경(DnD)도 `sort_order` 필드의 diff로 처리
-- Vitest로 diff 계산 로직의 정확성을 검증
-
-### 6. 코드 품질 관리
-
-| 영역            | 적용 내용                                                                                         |
-| --------------- | ------------------------------------------------------------------------------------------------- |
-| **테스트**      | Vitest 기반 단위 테스트 — 한글 초성 검색, Tree Diff 등 핵심 로직 검증                             |
-| **에러 복원력** | `ErrorBoundary` 컴포넌트로 런타임 에러 시 화이트 스크린 방지 — "다시 시도" / "새로고침" 옵션 제공 |
-| **접근성**      | 메시지 영역에 `role="log"`, 카테고리/질문 그룹에 `role="group"`, 입력/버튼에 `aria-label`         |
-| **타입 안전성** | `any` 타입 제거, 전체 코드베이스 `strict` 모드                                                    |
-| **보안**        | DOMPurify로 HTML 답변 살균(XSS 방어), Supabase RLS(Row Level Security) 적용                       |
-
-### 7. Claude AI + RAG 통합
-
-기존 3단계 규칙 기반 검색에서 매칭이 없을 때, **Supabase Edge Function(`chat-ai`)**을 통해 Anthropic Claude API를 호출합니다.
+### 6. Claude AI + RAG Integration
 
 ```
-검색 3단계 모두 실패 + aiEnabled 활성화
-  → askAi(companyId, userMessage)
-    → supabasePublic.functions.invoke("chat-ai")
-      → Edge Function에서 해당 회사 FAQ 데이터를 컨텍스트로 포함 (RAG)
-      → Claude API 호출 → AI 응답 반환
+All 3 search steps fail + aiEnabled === true
+  --> askAi(companyId, userMessage)
+    --> supabasePublic.functions.invoke("chat-ai")
+      --> Edge Function: include company FAQ as context (RAG)
+      --> Claude API call --> return AI response
 ```
 
-**설계 결정**:
+**Design decisions:**
+- **Session isolation** -- `supabasePublic` client (`persistSession: false`) 사용, 관리자 세션과 완전 분리
+- **Timeout** -- 15s AbortController로 무한 대기 방지
+- **Rate limit** -- Edge Function 내 IP 기반 분당 20회 제한
+- **Graceful degradation** -- AI 호출 실패 시 "검색 결과 없음" 안내로 자연스럽게 폴백
 
-- **세션 격리**: `supabasePublic` 클라이언트(persistSession: false)를 사용하여 관리자 로그인 세션과 완전 분리
-- **타임아웃**: 15초 AbortController로 무한 대기 방지
-- **Rate Limit**: Edge Function 내 IP 기반 분당 20회 제한
-- **Graceful Degradation**: AI 호출 실패 시 기존 "검색 결과 없음" 안내로 자연스럽게 폴백
-
-### 8. 서브도메인 기반 멀티테넌트
-
-하나의 코드베이스로 여러 회사에 독립적인 챗봇 서비스를 제공하기 위해, **서브도메인 기반 회사 전환** 구조를 설계했습니다.
+### 7. Subdomain-Based Multi-Tenancy
 
 ```
-사용자 접속
-  → getSubdomainSlug() — hostname에서 서브도메인 추출
-    ├── aifa.localhost → "aifa"
-    ├── aifa.goofistalk.com → "aifa"
-    ├── *.vercel.app → null (플랫폼 도메인 제외)
-    └── example.co.kr → null (한국 2차 도메인 처리)
+User access
+  --> getSubdomainSlug() : extract subdomain from hostname
+        |-- aifa.localhost         --> "aifa"
+        |-- aifa.goofitalk.co.kr   --> "aifa"
+        |-- *.vercel.app           --> null (platform domain excluded)
+        +-- example.co.kr          --> null (Korean 2nd-level domain)
 
-companySlug 결정 우선순위:
-  서브도메인 > ?company= query param > VITE_COMPANY_SLUG 환경변수
+companySlug priority:
+  subdomain > ?company= query param > VITE_COMPANY_SLUG env var
 
-회사 전환 시 → 5개 스토어 전체 리셋 (resetXxxStore)
+On company switch --> reset all 5 Zustand stores
 ```
 
-<br/>
+---
 
-## 핵심 기능 상세
+## AI-Powered Development
 
-### 1. 4단계 스마트 검색
+이 프로젝트는 **Claude Code** + **Shrimp Task MCP**를 활용한 AI 기반 개발 워크플로우로 진행했습니다.
 
-```
-사용자 입력
-  │
-  ├─ 1단계: 질문/답변 전문 검색 (초성 검색 포함)
-  │   └─ 매칭 시 → 관련 질문 목록 표시
-  │
-  ├─ 2단계: 서브카테고리 키워드 매칭
-  │   └─ 매칭 시 → 해당 서브카테고리 표시
-  │
-  ├─ 3단계: 카테고리 키워드 매칭
-  │   └─ 매칭 시 → 필터된 카테고리 메뉴 표시
-  │
-  ├─ 4단계: AI Fallback (aiEnabled 활성화 시)
-  │   └─ Claude API + RAG → AI 응답 표시 (displayType: "aiAnswer")
-  │
-  └─ 모두 실패 → 전체 메뉴 + 안내 메시지
-```
+### Claude Code Configuration
 
-### 2. 관리자 대시보드
-
-| 기능                       | 설명                                                                                     |
-| -------------------------- | ---------------------------------------------------------------------------------------- |
-| **FAQ 관리**               | 카테고리/서브카테고리/질문 CRUD + 드래그 앤 드롭 정렬                                    |
-| **실시간 미리보기**        | FAQ 편집 시 우측에 챗봇 UI 실시간 반영                                                   |
-| **분석 대시보드**          | 검색어 통계, 인기 질문, 일별 검색 추이 차트                                              |
-| **AI 설정**                | AI 활성화/비활성화, 모델 선택, temperature/max_tokens 조정, 시스템 프롬프트 커스터마이징 |
-| **회사 설정**              | 브랜드 색상, 로고, 인사말, 연락처 커스터마이징                                           |
-| **회사 관리** (슈퍼관리자) | 전체 회사 목록, 서비스 신청 승인/거절, 회사 삭제                                         |
-| **테마 전환**              | Mauve/Blue/Dark 3종 관리자 UI 테마                                                       |
-
-### 3. DisplayType 기반 UI 렌더링
-
-봇 메시지의 `displayType` 필드 하나로 메시지 하단에 렌더링할 UI 컴포넌트를 결정하는 **선언적 UI 패턴**을 사용합니다.
-
-| displayType          | 렌더링 UI                     |
-| -------------------- | ----------------------------- |
-| `menu`               | 카테고리 버튼 (2x3 그리드)    |
-| `subCategories`      | 서브카테고리 버튼             |
-| `questions`          | 질문 버튼 목록                |
-| `answer`             | 답변 + 네비게이션 버튼        |
-| `searchResults`      | 매칭 질문 목록                |
-| `subCategoryResults` | 매칭 서브카테고리 목록        |
-| `aiAnswer`           | AI 응답 + AI 배지 + 상담 안내 |
-
-<br/>
-
-## 프로젝트 구조
+프로젝트 루트의 `.claude/` 디렉토리에 AI 에이전트 설정, 커스텀 스킬, 코딩 규칙을 체계적으로 구성하여, AI가 프로젝트의 컨벤션과 아키텍처를 정확히 이해한 상태에서 코드를 작성하도록 했습니다.
 
 ```
-src/
-├── main.tsx                    # 진입점
-├── App.tsx                     # 라우팅 + 서브도메인 멀티테넌트 (ChatbotWrapper)
-│
-├── pages/                      # 공개 페이지
-│   ├── landing-page.tsx        # Goofi Talk 서비스 소개 랜딩
-│   └── landing/                # 랜딩 페이지 섹션 컴포넌트
-│       ├── landing-nav.tsx, hero-section.tsx, features-section.tsx
-│       ├── how-it-works-section.tsx, demo-section.tsx
-│       ├── cta-section.tsx, footer-section.tsx
-│
-├── components/
-│   ├── error-boundary.tsx      # 런타임 에러 복원 컴포넌트
-│   └── ui/                     # shadcn 기반 공통 UI (button, dialog, form 등)
-│
-├── hooks/                      # 공유 커스텀 훅
-│   ├── use-faq-data.ts         # FAQ 데이터 Zustand 스토어 + on-demand 로드
-│   └── use-company.ts          # 회사 설정 Zustand 스토어 + 동적 로드
-│
-├── types/                      # TypeScript 타입 정의
-├── data/faq/                   # 정적 FAQ 데이터 (오프라인 폴백)
-│
-├── lib/                        # 공유 라이브러리
-│   ├── supabase.ts             # Supabase 클라이언트 (관리자 인증용)
-│   ├── supabase-public.ts      # Supabase 공개 클라이언트 (세션 격리)
-│   ├── ai-client.ts            # AI 챗봇 클라이언트 (Edge Function 호출)
-│   ├── faq-fetcher.ts          # FAQ on-demand fetch + 검색 API
-│   ├── analytics.ts            # 검색/클릭 로깅 (fire-and-forget)
-│   ├── sanitize.ts             # DOMPurify HTML 살균 (XSS 방어)
-│   ├── slug-utils.ts           # URL-safe slug 생성 유틸
-│   └── utils.ts                # cn() 유틸 (clsx + tailwind-merge)
-│
-├── config/                     # 공유 설정
-│   ├── companies.ts            # CompanyConfig 타입 + PLATFORM_CONFIG
-│   ├── contact.ts              # 카카오톡 URL, 전화번호
-│   └── constants.ts            # COMPANY_SLUG 상수
-│
-├── chatbot/                    # 챗봇 전용
-│   ├── pages/                  # chatbot-page.tsx
-│   ├── components/
-│   │   ├── chat/
-│   │   │   ├── input/          # 텍스트 입력, 자동완성
-│   │   │   ├── message/        # 메시지 버블, ai-answer-actions.tsx
-│   │   │   ├── navigation/     # 카테고리·질문 버튼, 네비게이션
-│   │   │   └── search/         # 검색 결과, 서브카테고리 결과
-│   │   └── layout/             # 헤더 레이아웃
-│   ├── hooks/                  # use-chat-handlers, use-chat-search, use-chat-message
-│   ├── stores/                 # Zustand 3개 (message, navigation, search)
-│   └── utils/                  # 초성 검색, 아이콘, 이미지 줌
-│
-└── admin/                      # 관리자 페이지
-    ├── pages/
-    │   ├── login-page.tsx, faq-page.tsx, analytics-page.tsx, settings-page.tsx
-    │   ├── companies-page.tsx      # 슈퍼관리자 회사 관리
-    │   ├── signup-page.tsx         # 서비스 신청 (고객사 셀프서비스)
-    │   └── ai-settings-page.tsx    # AI 모델/프롬프트 설정
-    ├── components/
-    │   ├── layout/             # AdminLayout (인증 가드), Sidebar, 로고
-    │   ├── faq/                # 트리 편집, DnD, 폼, 실시간 미리보기
-    │   ├── analytics/          # 통계 카드, 검색 차트, 인기 질문
-    │   └── settings/           # 회사 설정 폼, 미리보기
-    ├── contexts/               # AdminContext (superadmin/admin/viewer 역할)
-    ├── hooks/                  # 인증 훅 + 역할 판별
-    └── lib/
-        ├── admin-api.ts        # Supabase CRUD API + 회사/신청 관리
-        ├── admin-theme.ts      # 관리자 테마 (Mauve/Blue/Dark)
-        ├── seed-data.ts, image-upload.ts
-        └── tree-diff.ts, tree-save.ts
-
-supabase/functions/             # Supabase Edge Functions
-├── chat-ai/index.ts            # RAG + Claude API (JWT 없음)
-├── signup-with-company/index.ts # 서비스 신청 처리 (JWT 없음)
-└── list-company-users/index.ts  # 사용자 목록 (JWT 필요)
+.claude/
+|-- agents/                          # AI sub-agent definitions
+|   |-- code-reviewer.md             #   automated code review
+|   |-- test-runner-fixer.md         #   test run + auto-fix on failure
+|   |-- react-supabase-fullstack.md  #   React + Supabase specialist
+|   |-- development-planner.md       #   ROADMAP.md management
+|   +-- prd-generator.md             #   PRD document generation
+|
+|-- skills/                          # custom slash commands
+|   |-- commit.md                    #   /commit
+|   |-- status/                      #   /status
+|   +-- explain/                     #   /explain
+|
+|-- rules/                           # project coding rules (600+ lines)
+|   +-- shrimp-rules.md             #   Zustand patterns, prohibitions, etc.
++-- docs/                            # Claude Code guides
 ```
 
-<br/>
+<details>
+<summary><strong>AI Agent Roles</strong></summary>
 
-## 실행 방법
+| Agent | Role | When Used |
+|:------|:-----|:----------|
+| `code-reviewer` | 버그, 보안, 컨벤션 위반 자동 검출 | 기능 구현/리팩토링 직후 |
+| `test-runner-fixer` | 테스트 실행 후 실패 시 자동 분석 및 수정 | 코드 변경 후 |
+| `react-supabase-fullstack` | React + Supabase 패턴 가이드, Edge Function 설계 | 풀스택 기능 구현 시 |
+| `development-planner` | ROADMAP.md 업데이트 및 개발 단계 관리 | 태스크 완료 시 |
+
+</details>
+
+<details>
+<summary><strong>Coding Rules (600+ lines)</strong></summary>
+
+600줄 이상의 프로젝트 규칙을 정의하여 AI가 코드 작성 시 자동으로 준수하도록 했습니다:
+
+- **Zustand selector hook pattern** -- 스토어 전체 구독 금지, `useMessages()` 등 세밀한 구독만 허용
+- **Multi-file sync rule** -- FAQ 카테고리 추가 시 4개 파일 동시 수정 강제
+- **Chat message pattern** -- 동기/비동기 패턴, `clearAllDisplayTypes()` 호출 순서 규칙
+- **Security rules** -- HTML 살균 필수, Supabase 클라이언트 격리, 분석 로그 fire-and-forget
+- **13 prohibited patterns** -- AI가 실수하기 쉬운 패턴을 명시적으로 차단
+
+</details>
+
+### Shrimp Task MCP Workflow
+
+```
+plan_task        requirement definition + tech analysis
+     |
+     v
+analyze_task     codebase investigation + implementation strategy
+     |
+     v
+split_tasks      decompose into sub-tasks (if needed)
+     |
+     v
+execute_task     implement + test
+     |
+     v
+verify_task      confirm test pass + update ROADMAP.md
+```
+
+---
+
+## Project Structure
+
+```
+chatbot/
+|
+|-- src/
+|   |-- App.tsx                        # routing + subdomain multi-tenant
+|   |
+|   |-- chatbot/                       # chatbot module
+|   |   |-- components/                #   chat UI (messages, input, nav, results)
+|   |   |-- hooks/                     #   use-chat-handlers, use-chat-search,
+|   |   |                              #   use-chat-message
+|   |   |-- stores/                    #   Zustand x3 (message, navigation, search)
+|   |   +-- utils/                     #   chosung search, category icons, image zoom
+|   |
+|   |-- admin/                         # admin module
+|   |   |-- pages/                     #   FAQ, analytics, settings, AI config,
+|   |   |                              #   company management
+|   |   |-- components/                #   tree editor, DnD, charts, settings form
+|   |   |-- contexts/                  #   AdminContext (role-based access control)
+|   |   +-- lib/                       #   admin-api, tree-diff, tree-save, admin-theme
+|   |
+|   |-- hooks/                         # shared hooks (use-faq-data, use-company)
+|   |-- lib/                           # shared libs (supabase, ai-client,
+|   |                                  #   faq-fetcher, sanitize)
+|   |-- config/                        # company config, constants
+|   |-- types/                         # TypeScript type definitions
+|   |-- data/faq/                      # static FAQ data (offline fallback)
+|   |-- pages/landing/                 # landing page sections
+|   +-- components/ui/                 # shadcn-based common UI
+|
+|-- supabase/
+|   |-- functions/                     # Edge Functions (chat-ai, signup, users)
+|   +-- migrations/                    # DB migration SQL
+|
+|-- e2e/                               # Playwright E2E tests
+|   |-- chatbot/                       #   chatbot flow tests (10)
+|   |-- admin/                         #   admin auth/FAQ tests (7)
+|   |-- smoke/                         #   page load checks (3)
+|   +-- helpers/                       #   selectors, wait helpers, auth fixture
+|
++-- .claude/                           # Claude Code config (AI dev tools)
+    |-- agents/                        #   AI sub-agent definitions
+    |-- skills/                        #   custom slash commands
+    |-- rules/                         #   project coding rules
+    +-- docs/                          #   Claude Code guides
+```
+
+---
+
+## Code Quality
+
+| Area | Details |
+|:-----|:--------|
+| ![](https://img.shields.io/badge/Unit_Test-Vitest-6E9F18?style=flat-square&logo=vitest&logoColor=white) | 한글 초성 검색, Tree Diff 등 핵심 로직 검증 |
+| ![](https://img.shields.io/badge/E2E_Test-Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white) | 21개 테스트 -- 챗봇 플로우, 관리자 인증, Smoke |
+| ![](https://img.shields.io/badge/Error-ErrorBoundary-EF4444?style=flat-square) | 런타임 에러 시 화이트 스크린 방지 |
+| ![](https://img.shields.io/badge/A11y-ARIA_Labels-0EA5E9?style=flat-square) | `role="log"`, `role="group"`, `aria-label` 적용 |
+| ![](https://img.shields.io/badge/Type_Safety-Strict_Mode-3178C6?style=flat-square&logo=typescript&logoColor=white) | `any` 타입 제거, 전체 코드베이스 `strict` 모드 |
+| ![](https://img.shields.io/badge/Security-DOMPurify+RLS-10B981?style=flat-square) | XSS 방어, Supabase RLS, 세션 격리 |
+| ![](https://img.shields.io/badge/Git_Hooks-Husky-1a1a2e?style=flat-square&logo=git&logoColor=white) | pre-commit lint-staged 자동 실행 |
+
+---
+
+## Getting Started
 
 ```bash
-# 의존성 설치
+# Install dependencies
 npm install
 
-# 개발 서버 실행
-npm run dev          # http://localhost:5173
+# Start dev server
+npm run dev              # http://localhost:5173
 
-# 프로덕션 빌드
-npm run build
-
-# 테스트 실행
-npm run test         # Vitest 단위 테스트
-npm run test:watch   # 워치 모드
-
-# 린트
-npm run lint
-
-# 운영 서버 배포
-./deploy.sh
+# Build & test
+npm run build            # tsc -b && vite build
+npm run test             # Vitest unit tests
+npm run test:e2e         # Playwright E2E tests
+npm run lint             # ESLint
 ```
 
-### 환경 변수
+### Environment Variables
 
 ```env
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
-VITE_COMPANY_SLUG=construction    # 빈 값이면 서브도메인/query param 우선
+VITE_COMPANY_SLUG=construction    # empty = subdomain/query param priority
 ```
 
-<br/>
+---
 
-## 라우팅
-
-| 경로               | 페이지         | 설명                                          |
-| ------------------ | -------------- | --------------------------------------------- |
-| `/`                | ChatbotWrapper | companySlug 유무에 따라 챗봇 또는 랜딩 페이지 |
-| `/apply`           | SignupPage     | 서비스 신청 (고객사 셀프서비스 가입)          |
-| `/admin/login`     | LoginPage      | 관리자 로그인                                 |
-| `/admin/faq`       | FaqPage        | FAQ 관리 (기본)                               |
-| `/admin/analytics` | AnalyticsPage  | 분석 대시보드                                 |
-| `/admin/settings`  | SettingsPage   | 회사 설정                                     |
-| `/admin/companies` | CompaniesPage  | 슈퍼관리자 회사 관리                          |
-| `/admin/ai`        | AiSettingsPage | AI 설정 관리                                  |
-| `/admin/signup`    | → `/apply`     | 리디렉션 (하위 호환)                          |
-
-> `MAINTENANCE_HOSTS`에 포함된 호스트는 점검 페이지를 표시합니다. (운영 도메인 확정 후 설정)
+<p align="center">
+  <sub>Built with</sub>&nbsp;
+  <img src="https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code" />&nbsp;
+  <sub>by a solo full-stack developer</sub>
+</p>
