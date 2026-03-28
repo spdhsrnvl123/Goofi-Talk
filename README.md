@@ -48,7 +48,7 @@
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
-- [Technical Deep Dive](#technical-deep-dive)
+- [Technical Decisions](#technical-decisions)
 - [AI-Powered Development](#ai-powered-development)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
@@ -219,181 +219,50 @@
 
 ## Architecture
 
-<img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/8876476d-e7f8-4a19-95b2-aa5a6ba98326" />
-
+<img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/80424b52-3e0f-48d9-baf3-ff7a12ad2b25" />
 
 ---
 
-## Technical Deep Dive
+## Technical Decisions
 
-### 1. Korean Chosung Search
+> 각 의사결정의 **문제 -- 고려한 방안 -- 결정 -- 결과**는 **[TECHNICAL_DECISIONS.md](./TECHNICAL_DECISIONS.md)** 에서 확인할 수 있습니다.
 
-한글 유니코드 구조(`AC00` ~ `D7A3`)를 분석하여 초성 추출 알고리즘을 직접 구현했습니다.
-
-```
-Unicode Formula: (chosung x 21 + jungsung) x 28 + jongsung + 0xAC00
-
-"수강신청" --> chosung extraction --> "ㅅㄱㅅㅊ"
-User input "ㅅㄱ" --> prefix matching --> search success
-```
-
-단순 `includes()` 비교가 아닌 유니코드 오프셋 계산을 통해, 한글 자음 입력만으로도 자연스러운 검색을 지원합니다.
-
-### 2. DisplayType-Based Declarative UI
-
-봇 메시지에 `displayType` 필드를 두어, 렌더링할 UI 컴포넌트를 데이터로 선언하는 패턴을 설계했습니다.
-
-```typescript
-addBotMessage({ text: "카테고리를 선택하세요", displayType: "menu" });
-addBotMessage({ text: "검색 결과입니다",       displayType: "searchResults" });
-addBotMessage({ text: aiAnswer,              displayType: "aiAnswer", isAiResponse: true });
-```
-
-**Why this pattern?**
-채팅 UI에서 메시지마다 다른 UI를 렌더링해야 하는 상황에서, `if/switch` 분기 대신 `displayType`을 데이터로 선언하면 새 UI 유형 추가 시 컴포넌트 매핑만 추가하면 됩니다. `clearAllDisplayTypes()` 패턴으로 항상 최신 메시지만 인터랙티브하게 유지합니다.
-
-### 3. Zustand 5-Store Architecture
-
-| Approach | Problem |
-|:---------|:--------|
-| Single global store | 메시지 추가 시 검색/네비게이션 컴포넌트까지 리렌더링 |
-| Context API | 빈번한 상태 변경(타이핑 애니메이션 등)에서 성능 병목 |
-| **Role-based 5-Store** | 각 스토어 변경이 해당 구독자만 리렌더링 **(adopted)** |
-
-셀렉터 훅(`useMessages()`, `useIsTyping()` 등)을 통해 특정 필드만 구독하여 fine-grained subscription을 실현했습니다.
-
-### 4. Supabase Fallback + On-demand Loading
-
-```
-fetchFaqData()
-  |-- Success --> use Supabase DB data
-  +-- Failure --> auto-switch to src/data/faq/ (zero downtime)
-
-Lazy Loading:
-  Initial  : fetch category list only (lightweight)
-  On click : fetch subcategories + questions on-demand
-  On search: server-side search, return only matched results
-```
-
-### 5. Tree Diff/Save Pattern
-
-매 수정마다 전체 트리를 DB에 저장하면 불필요한 쿼리가 발생합니다. 메모리 내 트리 조작 후 저장 시 diff를 계산하여 최소 쿼리만 실행합니다.
-
-```typescript
-// 1. Edit in-memory tree
-const editedTree = [...originalTree];
-
-// 2. Compute diff on save
-const diff = computeTreeDiff(originalTree, editedTree);
-// --> { created: [...], updated: [...], deleted: [...] }
-
-// 3. Apply only changes to DB
-await saveTreeDiff(diff);
-```
-
-### 6. Claude AI + RAG Integration
-
-```
-All 3 search steps fail + aiEnabled === true
-  --> askAi(companyId, userMessage)
-    --> supabasePublic.functions.invoke("chat-ai")
-      --> Edge Function: include company FAQ as context (RAG)
-      --> Claude API call --> return AI response
-```
-
-**Design decisions:**
-- **Session isolation** -- `supabasePublic` client (`persistSession: false`) 사용, 관리자 세션과 완전 분리
-- **Timeout** -- 15s AbortController로 무한 대기 방지
-- **Rate limit** -- Edge Function 내 IP 기반 분당 20회 제한
-- **Graceful degradation** -- AI 호출 실패 시 "검색 결과 없음" 안내로 자연스럽게 폴백
-
-### 7. Subdomain-Based Multi-Tenancy
-
-```
-User access
-  --> getSubdomainSlug() : extract subdomain from hostname
-        |-- aifa.localhost         --> "aifa"
-        |-- aifa.goofitalk.co.kr   --> "aifa"
-        |-- *.vercel.app           --> null (platform domain excluded)
-        +-- example.co.kr          --> null (Korean 2nd-level domain)
-
-companySlug priority:
-  subdomain > ?company= query param > VITE_COMPANY_SLUG env var
-
-On company switch --> reset all 5 Zustand stores
-```
+| Decision | Problem | Solution | Result |
+|:---------|:--------|:---------|:-------|
+| [4-Step Smart Search](./TECHNICAL_DECISIONS.md#1-4-step-smart-search) | AI 전수 처리 시 비용 폭증 | 규칙 기반 3단계 + AI Fallback 4단계 | Step 1~3 ~100ms, AI 호출 비용 대폭 절약 |
+| [Chosung Search](./TECHNICAL_DECISIONS.md#2-korean-chosung-search-algorithm) | `ㅅㄱ` -> `수강신청` 매칭 불가 | 유니코드 수학 공식 직접 구현 (59줄, 의존성 0) | 한글 11,172자 완벽 지원 |
+| [5-Store Architecture](./TECHNICAL_DECISIONS.md#3-zustand-5-store-architecture) | 단일 스토어에서 불필요한 리렌더링 | Zustand 도메인별 분리 + 셀렉터 훅 | `isTyping` 변경 시 MessageBubble만 리렌더 |
+| [Tree Diff/Save](./TECHNICAL_DECISIONS.md#4-tree-diffsave-pattern) | FAQ 1개 수정에 1000개 쿼리 발생 | Git-style diff 알고리즘 | 변경분만 DB 반영 (쿼리 1개) |
+| [RAG + Tenant Isolation](./TECHNICAL_DECISIONS.md#5-rag--multi-tenant-isolation) | 멀티테넌트 AI 데이터 격리 | 회사별 FAQ 동적 주입 + 6중 보안 계층 | 회사 추가 시 코드 수정 0 |
+| [Supabase Fallback](./TECHNICAL_DECISIONS.md#6-supabase-fallback--on-demand-loading) | 서버 장애 시 서비스 중단 | 정적 데이터 자동 폴백 + 2단계 지연 로딩 | Zero-downtime 보장 |
+| [Bundle Optimization](./TECHNICAL_DECISIONS.md#7-vite-bundle-optimization) | 챗봇 유저가 Admin 코드까지 로드 | React.lazy + Vite manualChunks | ~58% 번들 크기 절감 |
 
 ---
 
 ## AI-Powered Development
 
-이 프로젝트는 **Claude Code** + **Shrimp Task MCP**를 활용한 AI 기반 개발 워크플로우로 진행했습니다.
+> 상세 내용: [TECHNICAL_DECISIONS.md #8](./TECHNICAL_DECISIONS.md#8-ai-powered-development-process)
 
-### Claude Code Configuration
-
-프로젝트 루트의 `.claude/` 디렉토리에 AI 에이전트 설정, 커스텀 스킬, 코딩 규칙을 체계적으로 구성하여, AI가 프로젝트의 컨벤션과 아키텍처를 정확히 이해한 상태에서 코드를 작성하도록 했습니다.
+이 프로젝트는 **Claude Code** + **Shrimp Task MCP**를 활용한 AI 기반 개발 워크플로우로 진행했습니다. 핵심은 AI가 프로젝트의 컨벤션을 정확히 준수하도록 **600줄 이상의 규칙 파일을 시스템화**한 것입니다.
 
 ```
 .claude/
-|-- agents/                          # AI sub-agent definitions
-|   |-- code-reviewer.md             #   automated code review
-|   |-- test-runner-fixer.md         #   test run + auto-fix on failure
-|   |-- react-supabase-fullstack.md  #   React + Supabase specialist
-|   |-- development-planner.md       #   ROADMAP.md management
-|   +-- prd-generator.md             #   PRD document generation
-|
-|-- skills/                          # custom slash commands
-|   |-- commit.md                    #   /commit
-|   |-- status/                      #   /status
-|   +-- explain/                     #   /explain
-|
-|-- rules/                           # project coding rules (600+ lines)
-|   +-- shrimp-rules.md             #   Zustand patterns, prohibitions, etc.
-+-- docs/                            # Claude Code guides
+|-- agents/    code-reviewer, test-runner-fixer, fullstack-specialist, planner
+|-- skills/    /commit, /status, /explain (custom slash commands)
+|-- rules/     Zustand patterns, security rules, 13 prohibited patterns (600+ lines)
++-- docs/      Claude Code guides
 ```
 
 <details>
-<summary><strong>AI Agent Roles</strong></summary>
-
-| Agent | Role | When Used |
-|:------|:-----|:----------|
-| `code-reviewer` | 버그, 보안, 컨벤션 위반 자동 검출 | 기능 구현/리팩토링 직후 |
-| `test-runner-fixer` | 테스트 실행 후 실패 시 자동 분석 및 수정 | 코드 변경 후 |
-| `react-supabase-fullstack` | React + Supabase 패턴 가이드, Edge Function 설계 | 풀스택 기능 구현 시 |
-| `development-planner` | ROADMAP.md 업데이트 및 개발 단계 관리 | 태스크 완료 시 |
-
-</details>
-
-<details>
-<summary><strong>Coding Rules (600+ lines)</strong></summary>
-
-600줄 이상의 프로젝트 규칙을 정의하여 AI가 코드 작성 시 자동으로 준수하도록 했습니다:
-
-- **Zustand selector hook pattern** -- 스토어 전체 구독 금지, `useMessages()` 등 세밀한 구독만 허용
-- **Multi-file sync rule** -- FAQ 카테고리 추가 시 4개 파일 동시 수정 강제
-- **Chat message pattern** -- 동기/비동기 패턴, `clearAllDisplayTypes()` 호출 순서 규칙
-- **Security rules** -- HTML 살균 필수, Supabase 클라이언트 격리, 분석 로그 fire-and-forget
-- **13 prohibited patterns** -- AI가 실수하기 쉬운 패턴을 명시적으로 차단
-
-</details>
-
-### Shrimp Task MCP Workflow
+<summary><strong>Shrimp Task MCP Workflow</strong></summary>
 
 ```
-plan_task        requirement definition + tech analysis
-     |
-     v
-analyze_task     codebase investigation + implementation strategy
-     |
-     v
-split_tasks      decompose into sub-tasks (if needed)
-     |
-     v
-execute_task     implement + test
-     |
-     v
-verify_task      confirm test pass + update ROADMAP.md
+plan_task --> analyze_task --> split_tasks --> execute_task --> verify_task
 ```
+
+각 태스크는 분석 -> 구현 -> 검증 단계를 거쳐야 완료 처리되며, 완료된 태스크는 `ROADMAP.md`에 자동 반영됩니다.
+
+</details>
 
 ---
 
@@ -459,36 +328,3 @@ chatbot/
 | ![](https://img.shields.io/badge/Security-DOMPurify+RLS-10B981?style=flat-square) | XSS 방어, Supabase RLS, 세션 격리 |
 | ![](https://img.shields.io/badge/Git_Hooks-Husky-1a1a2e?style=flat-square&logo=git&logoColor=white) | pre-commit lint-staged 자동 실행 |
 
----
-
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Start dev server
-npm run dev              # http://localhost:5173
-
-# Build & test
-npm run build            # tsc -b && vite build
-npm run test             # Vitest unit tests
-npm run test:e2e         # Playwright E2E tests
-npm run lint             # ESLint
-```
-
-### Environment Variables
-
-```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
-VITE_COMPANY_SLUG=construction    # empty = subdomain/query param priority
-```
-
----
-
-<p align="center">
-  <sub>Built with</sub>&nbsp;
-  <img src="https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code" />&nbsp;
-  <sub>by a solo full-stack developer</sub>
-</p>
