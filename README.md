@@ -218,8 +218,8 @@
 ---
 
 ## Architecture
+<img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/43394298-ccdc-4351-8b51-01e072f25737" />
 
-<img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/80424b52-3e0f-48d9-baf3-ff7a12ad2b25" />
 
 ---
 
@@ -227,21 +227,21 @@
 
 > 각 의사결정의 **문제 -- 고려한 방안 -- 결정 -- 결과**는 **[TECHNICAL_DECISIONS.md](./TECHNICAL_DECISIONS.md)** 에서 확인할 수 있습니다.
 
-| Decision | Problem | Solution | Result |
-|:---------|:--------|:---------|:-------|
-| [4-Step Smart Search](./TECHNICAL_DECISIONS.md#1-4-step-smart-search) | AI 전수 처리 시 비용 폭증 | 규칙 기반 3단계 + AI Fallback 4단계 | Step 1~3 ~100ms, AI 호출 비용 대폭 절약 |
-| [Chosung Search](./TECHNICAL_DECISIONS.md#2-korean-chosung-search-algorithm) | `ㅅㄱ` -> `수강신청` 매칭 불가 | 유니코드 수학 공식 직접 구현 (59줄, 의존성 0) | 한글 11,172자 완벽 지원 |
-| [5-Store Architecture](./TECHNICAL_DECISIONS.md#3-zustand-5-store-architecture) | 단일 스토어에서 불필요한 리렌더링 | Zustand 도메인별 분리 + 셀렉터 훅 | `isTyping` 변경 시 MessageBubble만 리렌더 |
-| [Tree Diff/Save](./TECHNICAL_DECISIONS.md#4-tree-diffsave-pattern) | FAQ 1개 수정에 1000개 쿼리 발생 | Git-style diff 알고리즘 | 변경분만 DB 반영 (쿼리 1개) |
-| [RAG + Tenant Isolation](./TECHNICAL_DECISIONS.md#5-rag--multi-tenant-isolation) | 멀티테넌트 AI 데이터 격리 | 회사별 FAQ 동적 주입 + 6중 보안 계층 | 회사 추가 시 코드 수정 0 |
-| [Supabase Fallback](./TECHNICAL_DECISIONS.md#6-supabase-fallback--on-demand-loading) | 서버 장애 시 서비스 중단 | 정적 데이터 자동 폴백 + 2단계 지연 로딩 | Zero-downtime 보장 |
-| [Bundle Optimization](./TECHNICAL_DECISIONS.md#7-vite-bundle-optimization) | 챗봇 유저가 Admin 코드까지 로드 | React.lazy + Vite manualChunks | ~58% 번들 크기 절감 |
+| 의사결정 | 문제 | 해결 | 결과 |
+|:---------|:-----|:-----|:-----|
+| [4단계 스마트 검색](./TECHNICAL_DECISIONS.md#1-4단계-스마트-검색-설계) | AI 전수 처리 시 비용 폭증 | 규칙 기반 3단계 + AI Fallback 4단계 | 1~3단계 ~100ms, AI 호출 비용 대폭 절약 |
+| [한글 초성 검색](./TECHNICAL_DECISIONS.md#2-한글-초성-검색-알고리즘-직접-구현) | `ㅅㄱ` -> `수강신청` 매칭 불가 | 유니코드 수학 공식 직접 구현 (59줄, 의존성 0) | 한글 11,172자 완벽 지원 |
+| [5-Store 분리 설계](./TECHNICAL_DECISIONS.md#3-zustand-5-store-분리-설계) | 단일 스토어에서 불필요한 리렌더링 | Zustand 도메인별 분리 + 셀렉터 훅 | `isTyping` 변경 시 MessageBubble만 리렌더 |
+| [Tree Diff/Save](./TECHNICAL_DECISIONS.md#4-tree-diffsave-패턴-faq-편집-최적화) | FAQ 1개 수정에 1000개 쿼리 발생 | Git 스타일 diff 알고리즘 | 변경분만 DB 반영 (쿼리 1개) |
+| [RAG + 멀티테넌트 격리](./TECHNICAL_DECISIONS.md#5-rag--멀티테넌트-격리) | 멀티테넌트 AI 데이터 격리 | 회사별 FAQ 동적 주입 + 6중 보안 계층 | 회사 추가 시 코드 수정 0 |
+| [Supabase 폴백](./TECHNICAL_DECISIONS.md#6-supabase-폴백--on-demand-지연-로딩) | 서버 장애 시 서비스 중단 | 정적 데이터 자동 폴백 + 2단계 지연 로딩 | Zero-downtime 보장 |
+| [번들 최적화](./TECHNICAL_DECISIONS.md#7-vite-번들-최적화) | 챗봇 유저가 Admin 코드까지 로드 | React.lazy + Vite manualChunks | ~58% 번들 크기 절감 |
 
 ---
 
 ## AI-Powered Development
 
-> 상세 내용: [TECHNICAL_DECISIONS.md #8](./TECHNICAL_DECISIONS.md#8-ai-powered-development-process)
+> 상세 내용: [TECHNICAL_DECISIONS.md #8](./TECHNICAL_DECISIONS.md#8-ai-기반-개발-프로세스)
 
 이 프로젝트는 **Claude Code** + **Shrimp Task MCP**를 활용한 AI 기반 개발 워크플로우로 진행했습니다. 핵심은 AI가 프로젝트의 컨벤션을 정확히 준수하도록 **600줄 이상의 규칙 파일을 시스템화**한 것입니다.
 
@@ -327,4 +327,3 @@ chatbot/
 | ![](https://img.shields.io/badge/Type_Safety-Strict_Mode-3178C6?style=flat-square&logo=typescript&logoColor=white) | `any` 타입 제거, 전체 코드베이스 `strict` 모드 |
 | ![](https://img.shields.io/badge/Security-DOMPurify+RLS-10B981?style=flat-square) | XSS 방어, Supabase RLS, 세션 격리 |
 | ![](https://img.shields.io/badge/Git_Hooks-Husky-1a1a2e?style=flat-square&logo=git&logoColor=white) | pre-commit lint-staged 자동 실행 |
-
