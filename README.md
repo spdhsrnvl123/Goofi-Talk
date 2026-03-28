@@ -219,38 +219,8 @@
 
 ## Architecture
 
-```
-Cloudflare (DNS / SSL / CDN / DDoS Protection)
-*.goofitalk.co.kr --> subdomain routing
-         |
-         v
-+------------------+          +-----------------------------------+
-|   Browser        |          |   React SPA (Vite 7)              |
-|                  |          |                                   |
-|  subdomain       |--------->|   Chatbot        Admin (/admin)   |
-|  detection       |          |   - messageStore - FAQ CRUD       |
-|                  |          |   - navStore     - DnD Sort        |
-|  aifa.goofitalk  |          |   - searchStore  - AI Settings    |
-|  .co.kr          |          |                  - Analytics      |
-+------------------+          |                  - Role: super    |
-                              |                    admin/admin    |
-                              |                    /viewer        |
-                              +--------+----------+---------------+
-                                       |          |
-                              +--------v----------v---------------+
-                              |   Supabase                        |
-                              |                                   |
-                              |   PostgreSQL  Auth  Storage        |
-                              |                                   |
-                              |   Edge Functions:                  |
-                              |   +-- chat-ai (RAG + Claude API)  |
-                              |   +-- signup-with-company          |
-                              |   +-- list-company-users           |
-                              |                                   |
-                              |   Connection fail --> static       |
-                              |   fallback (src/data/faq/)         |
-                              +-----------------------------------+
-```
+<img width="1408" height="768" alt="image" src="https://github.com/user-attachments/assets/8876476d-e7f8-4a19-95b2-aa5a6ba98326" />
+
 
 ---
 
