@@ -256,46 +256,7 @@
 
 ## 아키텍처
 
-```
-Cloudflare (DNS / SSL 종단 / CDN 캐싱 / DDoS 방어)
-*.goofitalk.co.kr --> 서브도메인 라우팅
-         |
-         v
-+-----------------------------------------+
-|   가비아 호스팅 서버 (NGINX)               |
-|   리버스 프록시 / SPA 라우팅 (try_files)   |
-|   gzip 압축 / 정적 파일 서빙               |
-|   /var/www/chatbot/                       |
-+--------------------+--------------------+
-                     |
-                     v
-+--------------------+---------------------------------------+
-|   React SPA (Vite 7)                                       |
-|                                                            |
-|   챗봇 (Zustand)              관리자 (/admin)               |
-|   - messageStore              - TanStack Query v5 캐싱      |
-|   - navigationStore           - useQuery / useMutation      |
-|   - searchStore               - staleTime: Infinity         |
-|                               - mutation 기반 캐시 무효화    |
-|   useChatHandlers             - FAQ CRUD / DnD 정렬         |
-|   useChatSearch               - AI 설정 / 분석 대시보드      |
-|   handleSend (AI Fallback)    - 역할: superadmin/admin/     |
-|                                 viewer                      |
-+--------------------+---------------------------------------+
-                     |
-+--------------------+---------------------------------------+
-|   Supabase                                                 |
-|                                                            |
-|   PostgreSQL    Auth    Storage                             |
-|                                                            |
-|   Edge Functions:                                          |
-|   +-- chat-ai (RAG + Claude API)                           |
-|   +-- signup-with-company                                  |
-|   +-- list-company-users                                   |
-|                                                            |
-|   연결 실패 --> src/data/faq/ 정적 데이터 자동 폴백          |
-+------------------------------------------------------------+
-```
+<img width="1792" height="2400" alt="architecture" src="https://github.com/user-attachments/assets/a9d5843a-51da-40fb-8081-a73af3fc5cc9" />
 
 ---
 
