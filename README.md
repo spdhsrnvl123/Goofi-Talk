@@ -34,13 +34,7 @@
 
 서브도메인 기반 멀티테넌트 구조로 하나의 코드베이스에서 여러 회사에 독립적인 FAQ 챗봇 서비스를 제공합니다. 기존 3단계 규칙 기반 검색에 Claude AI Fallback을 추가하여, 매칭 실패 시에도 AI가 FAQ 컨텍스트를 바탕으로 자연어 답변을 생성합니다.
 
-> <!-- 아래에 실제 스크린샷 또는 GIF를 삽입하세요 -->
-> **[TODO]** 챗봇 동작 화면 GIF 또는 스크린샷 삽입
->
-> ```
-> 권장 구성: 챗봇 대화 화면 + 관리자 대시보드 + 모바일 반응형
-> 도구 추천: Kap(macOS) / ScreenToGif(Windows) / Chrome DevTools Recorder
-> ```
+<img width="1792" height="2384" alt="chatbot" src="https://github.com/user-attachments/assets/63df802b-cefb-404a-9b8e-db19dcd11f79" />
 
 ---
 
