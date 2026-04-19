@@ -1,272 +1,248 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/Goofi_Talk-AI_FAQ_Chatbot_SaaS-000000?style=for-the-badge&labelColor=000000" alt="Goofi Talk" height="40" />
-</p>
+# Goofi Talk — 멀티테넌트 AI FAQ 챗봇
 
-<p align="center">
-  <strong>멀티테넌트 AI FAQ 챗봇 SaaS 플랫폼</strong><br/>
-  <sub>현장 문제 발견 → 채널톡 방문·견적 → 자체 기획·개발 → 실서비스 배포</sub>
-</p>
+![React](https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript_5.9-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white)
+![Claude AI](https://img.shields.io/badge/Claude_API-D97757?style=flat-square&logo=anthropic&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite_7-646CFF?style=flat-square&logo=vite&logoColor=white)
+![TanStack Query](https://img.shields.io/badge/TanStack_Query_v5-FF4154?style=flat-square&logo=reactquery&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)
+![NGINX](https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=nginx&logoColor=white)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
-  <img src="https://img.shields.io/badge/TypeScript_5.9-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/Claude_API-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude AI" />
-  <img src="https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code" />
-  <img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=nginx&logoColor=white" alt="NGINX" />
-  <img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare" />
-</p>
+> 서브도메인 기반 멀티테넌트 AI FAQ 챗봇 — 4단계 스마트 검색(규칙 기반 3단계 + AI Fallback), 관리자 대시보드, 회사별 독립 서비스를 제공하는 풀스택 SPA
 
-<p align="center">
-  <a href="https://goofitalk.co.kr"><img src="https://img.shields.io/badge/Landing_Page-06B6D4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Landing Page" /></a>&nbsp;
-  <a href="https://kcie.goofitalk.co.kr"><img src="https://img.shields.io/badge/Chatbot_Demo-000000?style=for-the-badge&logo=chatbot&logoColor=white" alt="Chatbot Demo" /></a>&nbsp;
-  <a href="https://goofitalk.co.kr/admin"><img src="https://img.shields.io/badge/Admin_Page-8B5CF6?style=for-the-badge&logo=shield&logoColor=white" alt="Admin Page" /></a>
-</p>
+**[랜딩 페이지](https://goofitalk.co.kr) · [챗봇 데모](https://kcie.goofitalk.co.kr) · [관리자 페이지](https://goofitalk.co.kr/admin)**
 
 ---
 
-## Overview
+## 왜 만들었나
 
-**Goofi Talk**은 기업 고객센터의 반복 FAQ 문의를 줄이기 위해 **기획부터 배포까지 1인으로 진행**한 AI FAQ 챗봇 SaaS 플랫폼입니다.
+건설산업교육원에서 근무하면서 고객센터에 매일 같은 질문이 반복되는 걸 직접 봤습니다. 수강신청 방법, 교육 일정, 수료증 발급 — 답변이 정해져 있는 질문인데 매번 전화로 안내하고 있었습니다.
 
-현장에서 문제를 발견하고, 채널톡을 직접 방문·견적 비교한 뒤, FAQ에 특화된 서비스를 직접 기획·설계하여 실서비스에 배포했습니다. 서브도메인 기반 멀티테넌트 구조로 하나의 코드베이스에서 여러 회사에 독립적인 FAQ 챗봇을 제공합니다.
+채널톡 같은 외부 솔루션을 검토했지만, FAQ 특화 기능이 부족하고 비용도 부담이었습니다. **차라리 우리 현장에 맞는 걸 직접 만들자**고 판단했고, 기획부터 배포까지 혼자 진행했습니다. 이후 다른 기관에도 제공할 수 있도록 멀티테넌트 구조로 확장했습니다.
 
-개발은 **Claude Code + Shrimp Task MCP + MCP 서버 4개**를 활용한 AI 기반 워크플로우로 진행했으며, AI의 컨텍스트 윈도우 비용을 최적화하고 에이전트를 역할별로 분리하는 등 **AI를 시스템으로 관리하는 방식**으로 프로젝트를 완성했습니다.
-
-<img width="800" alt="chatbot" src="https://github.com/user-attachments/assets/63df802b-cefb-404a-9b8e-db19dcd11f79" />
-
----
-
-## 목차
-
-- [도입 배경](#도입-배경)
-- [Problem & Solution](#problem--solution)
-- [주요 기능](#주요-기능)
-- [서비스 설계 결정](#서비스-설계-결정)
-- [AI 활용 전략](#ai-활용-전략)
-- [기술 스택](#기술-스택)
-- [아키텍처](#아키텍처)
-- [프로젝트 구조](#프로젝트-구조)
-
----
-
-## 도입 배경
-
-건설산업교육원에서 근무하면서 고객센터로 들어오는 **월 수백 건 이상의 반복 FAQ 문의**를 직접 목격했습니다. 수강신청 방법, 교육 일정, 수료증 발급 같은 동일한 질문이 매일 반복되고 있었습니다.
-
-이 문제를 해결하기 위해 **채널톡을 직접 방문하여 서비스를 분석하고 견적을 수령**했습니다. 그러나 월 구독 비용이 교육기관 예산 대비 과했고, 채널톡이 제공하는 CRM/마케팅 기능은 우리에게 필요하지 않았습니다. 우리에게 필요한 건 **FAQ 자동 응답**뿐이었습니다.
-
-그래서 결정했습니다 — **FAQ 챗봇에 특화된 서비스를 직접 만들자.**
-
-```
-현장에서 발견한 문제                  기존 솔루션 검토                     직접 개발 결정
-+---------------------+            +---------------------+            +---------------------+
-| 고객센터 반복 FAQ     |            | 채널톡 직접 방문      |            | Goofi Talk 기획      |
-| 월 수백 건 이상       |  ------->  | 서비스 분석 + 견적    |  ------->  | FAQ 특화 챗봇 SaaS    |
-| 동일 질문 매일 반복    |            | CRM 중심, 비용 과다   |            | 비용 절감 + 맞춤 기능  |
-+---------------------+            +---------------------+            +---------------------+
-```
-
-직접 만들면서 **건설산업교육원의 운영 환경에 맞는 기능**을 설계할 수 있었고, 이를 다른 기관에도 제공할 수 있도록 **멀티테넌트 SaaS 구조**로 확장했습니다.
-
----
-
-## Problem & Solution
-
-| Problem | Solution | Impact |
-|:--------|:---------|:-------|
-| 반복 FAQ 문의로 인한 고객센터 부하 | 대화형 챗봇 셀프 서비스 | CS 인력 의존도 감소 |
-| 외부 솔루션(채널톡) 비용 부담 | FAQ 특화 자체 서비스 기획·개발 | 연간 수백만 원 절감 |
-| 비개발자의 콘텐츠 관리 어려움 | Drag & Drop FAQ CRUD 관리자 페이지 | 운영자 자율 관리 가능 |
-| 단순 키워드 검색의 낮은 정확도 | 4단계 검색 + AI Fallback (비용 최적화 설계) | 검색 커버리지 극대화 |
-| 단일 고객사 한정 서비스 | 서브도메인 기반 멀티테넌트 SaaS | N개 회사 동시 서비스 |
-| AI API 비용 폭증 우려 | 규칙 기반 3단계로 먼저 처리, AI는 최후 수단 | API 호출 비용 대폭 절감 |
+| 문제 | 해결 |
+| --- | --- |
+| 반복 FAQ 문의로 고객센터 부하 | 대화형 챗봇으로 셀프 서비스 |
+| 외부 솔루션 비용 부담 + FAQ 특화 기능 부족 | FAQ에 집중한 자체 서비스 기획·개발 |
+| 비개발자의 콘텐츠 관리 어려움 | 드래그 앤 드롭 FAQ CRUD 관리자 페이지 |
+| 단순 키워드 검색의 낮은 정확도 | 4단계 검색 + 한글 초성 매칭 + AI Fallback |
+| 단일 기관 한정 서비스 | 서브도메인 기반 멀티테넌트로 확장 |
 
 ---
 
 ## 주요 기능
 
-<table>
-  <tr>
-    <td width="50%">
-      <img src="https://img.shields.io/badge/-Core-3178C6?style=flat-square" alt="Core" /><br/>
-      <strong>4단계 검색 설계</strong><br/>
-      규칙 기반 3단계(무료) + AI Fallback(유료) — 비용 최적화 구조
-    </td>
-    <td width="50%">
-      <img src="https://img.shields.io/badge/-AI-D97757?style=flat-square" alt="AI" /><br/>
-      <strong>AI Fallback (Claude API)</strong><br/>
-      검색 실패 시 회사별 FAQ를 AI에 전달하여 맥락 기반 답변 생성
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src="https://img.shields.io/badge/-SaaS-8B5CF6?style=flat-square" alt="SaaS" /><br/>
-      <strong>멀티테넌트 SaaS</strong><br/>
-      서브도메인 기반 회사 전환, 회사별 독립 FAQ / 설정 / 분석
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/-관리자-F59E0B?style=flat-square" alt="관리자" /><br/>
-      <strong>관리자 대시보드</strong><br/>
-      FAQ CRUD, DnD 정렬, AI 설정, 분석 대시보드, 역할 기반 접근 제어
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src="https://img.shields.io/badge/-기획-10B981?style=flat-square" alt="기획" /><br/>
-      <strong>PRD 35개 기능 · DB 9개 테이블</strong><br/>
-      Guest · 회사관리자 · 슈퍼관리자 3종 사용자 시나리오 설계
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/-인프라-009639?style=flat-square" alt="인프라" /><br/>
-      <strong>서버 직접 구축</strong><br/>
-      가비아 호스팅 + NGINX + Cloudflare CDN/SSL
-    </td>
-  </tr>
-</table>
+### 챗봇
 
----
+- **4단계 스마트 검색** — 질문 전문 검색 → 서브카테고리 키워드 → 카테고리 키워드 → AI Fallback
+- **한글 초성 검색** — `ㅅㄱ` 입력으로 `수강신청` 관련 질문 검색
+- **AI Fallback (Claude API)** — 검색 실패 시 회사 FAQ를 시스템 프롬프트에 주입하여 자연어 답변 생성
+- **오프라인 폴백** — Supabase 연결 실패 시 정적 FAQ 데이터로 자동 전환
 
-## 서비스 설계 결정
+### 관리자
 
-> 각 의사결정의 상세 내용은 **[기술_설계_노트.md](./기술_설계_노트.md)** 에서 확인할 수 있습니다.
+- **FAQ CRUD** — 카테고리/서브카테고리/질문 트리 구조, @dnd-kit 드래그 앤 드롭 정렬
+- **리치 텍스트 편집** — TipTap 에디터 + Supabase Storage 이미지 업로드
+- **분석 대시보드** — 검색 로그, 클릭 분석, AI 호출 통계 (Recharts)
+- **AI 설정** — 회사별 모델 선택, 커스텀 시스템 프롬프트, AI 활성화 토글
+- **역할 기반 접근 제어** — superadmin / admin / viewer 3역할
+- **위젯 임베드** — iframe 삽입 코드 자동 생성, 위치 커스터마이징
 
-| 설계 결정 | 문제 | 해결 | 결과 |
-|:---------|:-----|:-----|:-----|
-| [4단계 검색 설계](./기술_설계_노트.md#1-4단계-스마트-검색-설계) | 모든 질문을 AI로 처리하면 비용 폭증 | 규칙 기반 3단계(무료)로 먼저 처리, AI는 최후 수단 | API 비용 대폭 절감 |
-| [상태 관리 설계](./기술_설계_노트.md#3-zustand--tanstack-query-이중-상태-설계) | Admin 페이지 전환 시 같은 데이터 반복 호출 | UI 상태와 서버 데이터 분리, 캐싱으로 재요청 방지 | 페이지 전환 시 즉시 렌더링 |
-| [FAQ 편집 설계](./기술_설계_노트.md#4-tree-diffsave-패턴-faq-편집-최적화) | FAQ 1개 수정해도 전체를 다시 저장 | 변경분만 골라서 저장하는 구조 (Git 원리 착안) | 1000개 중 1개만 수정하면 1개만 저장 |
-| [멀티테넌트 격리](./기술_설계_노트.md#5-rag--멀티테넌트-격리) | A회사 FAQ가 B회사에 노출되면 안 됨 | 회사 ID 필터 + AI에 해당 회사 FAQ만 전달 + 세션 분리 | 새 회사 추가 시 코드 수정 0 |
-| [검색 비용 최적화](./기술_설계_노트.md#1-4단계-스마트-검색-설계) | 채널톡 대비 비용 절감이 핵심 목표 | 한글 초성 검색 등 클라이언트 로직으로 무료 처리 범위 확대 | 대부분 질문을 비용 0원으로 처리 |
-| [서버 인프라 직접 구축](./기술_설계_노트.md#8-서버-인프라-직접-구축) | 매니지드 플랫폼 의존, 인프라 학습 부재 | 가비아 + NGINX + Cloudflare 직접 구성 | SSH/리버스프록시/SSL 실무 경험 |
+### 멀티테넌트
 
----
-
-## AI 활용 전략
-
-이 프로젝트는 **Claude Code**를 단순 코드 생성 도구가 아닌, **시스템화된 AI 워크플로우**로 활용하여 진행했습니다.
-
-### 컨텍스트 윈도우 비용 최적화
-
-AI는 매 요청마다 프로젝트 규칙을 읽어야 하지만, 긴 문서를 매번 읽으면 비용이 폭증합니다.
-
-```
-Before: CLAUDE.md 530줄 → 매 요청마다 전부 읽음 (비용 낭비)
-After:  CLAUDE.md 53줄 (핵심만) + docs/ 6개 상세 문서 (필요 시만 참조)
-결과:   컨텍스트 윈도우 ~90% 절감
-```
-
-### Shrimp Task Manager (vs Taskmaster AI)
-
-Taskmaster AI는 프로젝트 초기부터 사용해야 효과적이지만, Goofi Talk은 이미 개발 중간 단계였습니다. **중도 투입이 가능한 Shrimp Task MCP**를 선택하여, 태스크별 분석→구현→검증 3단계를 강제하고, 완료된 태스크는 ROADMAP.md에 자동 반영하도록 구성했습니다.
-
-```
-plan_task → analyze_task → split_tasks → execute_task → verify_task
-```
-
-### AI에게 "일 잘 시키는" 4가지 도구
-
-| 도구 | 활용 방식 |
-|:-----|:---------|
-| **Skills** | `/commit`, `/status` 등 커스텀 명령어로 반복 프롬프트 제거, 컨텍스트 절약 |
-| **Agents 8종** | code-reviewer, planner, test-runner 등 역할별 분리. 탐색 에이전트를 먼저 실행하여 메인 컨텍스트 오염 방지 |
-| **Rules** | 금지 패턴 13개, 코딩 컨벤션 규칙으로 AI 실수 사전 차단 |
-| **Frontend-Design** | 랜딩/로그인/Admin 전면 리디자인에 적용, 프로덕션급 UI 생성 |
-
-### MCP 서버 4개 연동
-
-| MCP 서버 | 활용 방식 |
-|:---------|:---------|
-| **Supabase** | 테이블 설계 · 마이그레이션 · 데이터 삽입 · 스키마 검증 |
-| **Playwright** | E2E 테스트 자동 검증 (21개 테스트) |
-| **Context7** | React 19, TanStack Query v5 등 최신 문서 실시간 참조 |
-| **shadcn** | 최적 UI 컴포넌트 선택 및 설치 |
-
-### AI로 만든 제품이 AI를 서비스
-
-```
-개발 과정: Claude Code (AI) → 코드 생성 · 검토 · 테스트
-    ↓
-제품 내부: Claude API → RAG 기반 FAQ 자연어 답변 생성
-    ↓
-분석:     AI Fallback 비율로 FAQ 콘텐츠 품질 측정
-```
+- **서브도메인 기반 회사 전환** — `kcie.goofitalk.co.kr`, `aifa.goofitalk.co.kr`
+- **회사별 데이터 격리** — 모든 쿼리에 `company_id` 필터
+- **셀프서비스 온보딩** — 서비스 신청 → 슈퍼관리자 승인 → 서브도메인 추가 (코드 수정 0)
 
 ---
 
 ## 기술 스택
 
-<table>
-  <tr>
-    <td align="center" width="140">
-      <img src="https://img.shields.io/badge/-Frontend-61DAFB?style=for-the-badge" alt="Frontend" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" />
-      <img src="https://img.shields.io/badge/TypeScript_5.9-3178C6?style=flat-square&logo=typescript&logoColor=white" />
-      <img src="https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" />
-      <img src="https://img.shields.io/badge/shadcn/ui-000000?style=flat-square&logo=shadcnui&logoColor=white" />
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/-상태_관리-764ABC?style=for-the-badge" alt="상태 관리" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/Zustand_5-764ABC?style=flat-square&logo=npm&logoColor=white" />
-      <sub>(UI 상태)</sub>&nbsp;
-      <img src="https://img.shields.io/badge/TanStack_Query_v5-FF4154?style=flat-square&logo=reactquery&logoColor=white" />
-      <sub>(서버 데이터 캐싱)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/-Backend-3FCF8E?style=for-the-badge" alt="Backend" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white" />
-      <sub>(PostgreSQL 9테이블 + Auth + Storage + Edge Functions 6개)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/-AI-D97757?style=for-the-badge" alt="AI" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/Claude_API-D97757?style=flat-square&logo=anthropic&logoColor=white" />
-      <sub>(RAG 기반 FAQ 응답 생성)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/-인프라-009639?style=for-the-badge" alt="인프라" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=nginx&logoColor=white" />
-      <sub>(리버스 프록시, SPA 라우팅)</sub>&nbsp;
-      <img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white" />
-      <sub>(SSL/TLS, CDN)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/-AI_개발도구-191919?style=for-the-badge" alt="AI 개발도구" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=anthropic&logoColor=white" />
-      <img src="https://img.shields.io/badge/Shrimp_Task_MCP-191919?style=flat-square" />
-      <sub>(태스크 관리)</sub>&nbsp;
-      <img src="https://img.shields.io/badge/MCP_Servers_x4-191919?style=flat-square" />
-      <sub>(Supabase, Playwright, Context7, shadcn)</sub>
-    </td>
-  </tr>
-</table>
+| 구분 | 기술 |
+| --- | --- |
+| **프론트엔드** | React 19, TypeScript 5.9, Tailwind CSS v4, shadcn/ui |
+| **상태 관리** | Zustand 5 (클라이언트 UI 상태) + TanStack Query v5 (서버 데이터 캐싱) |
+| **백엔드** | Supabase (PostgreSQL 9테이블 + Auth + Storage + Edge Functions 6개) |
+| **AI** | Anthropic Claude API — Edge Function에서 FAQ 컨텍스트 주입 방식 |
+| **라우팅** | React Router v7 (Lazy Loading) |
+| **빌드** | Vite 7 (manualChunks 분할) |
+| **리치 텍스트** | TipTap (StarterKit + Underline + Color + Link + Image) |
+| **DnD** | @dnd-kit/core, @dnd-kit/sortable |
+| **차트** | Recharts |
+| **애니메이션** | framer-motion |
+| **보안** | DOMPurify (XSS 방어), Supabase 클라이언트 세션 격리 |
+| **테스트** | Vitest (단위 127개) + Playwright (E2E 20개) |
+| **인프라** | 가비아 호스팅 서버 + NGINX (리버스 프록시, SPA 라우팅, gzip) |
+| **CDN / 보안** | Cloudflare (SSL/TLS, CDN 캐싱, DNS, DDoS 방어) |
+| **배포** | deploy.sh — 빌드 → SCP 업로드 → NGINX 서빙 |
+| **AI 개발 도구** | Claude Code + Shrimp Task MCP |
 
 ---
 
-## 아키텍처
+<img width="1408" height="768" alt="Gemini_Generated_Image_b8ydsrb8ydsrb8yd" src="https://github.com/user-attachments/assets/a6a1ba82-6d68-4fd2-9ccc-3ca350210c42" />
 
-<img width="800" alt="architecture" src="https://github.com/user-attachments/assets/a9d5843a-51da-40fb-8081-a73af3fc5cc9" />
+---
+
+## 기술적 도전
+
+### 1. 4단계 스마트 검색 — AI 비용을 줄이면서 검색 품질 유지
+
+모든 질문을 AI로 보내면 비용이 폭증합니다. 규칙 기반 3단계로 먼저 처리하고, AI는 최후 수단으로만 호출합니다.
+
+```
+사용자 입력
+  │
+  ├─ 1단계: 질문 전문 ilike 검색 (DB)
+  │     "수강신청 방법" → 직접 매칭
+  │
+  ├─ 2단계: 서브카테고리 키워드 + 초성 매칭
+  │     "ㅅㄱ" → 초성 추출 → "수강" 포함 질문 검색
+  │
+  ├─ 3단계: 카테고리 키워드 매칭
+  │     "교육" → 교육 카테고리 전체 질문 반환
+  │
+  └─ 4단계: AI Fallback (Claude API)
+        회사 FAQ 전체를 시스템 프롬프트에 주입 → 자연어 답변
+        ※ 1~3단계 모두 실패 + AI 활성화 상태에서만 호출
+```
+
+### 2. 한글 초성 검색
+
+한글 유니코드 구조(`AC00` ~ `D7A3`)를 분석해 초성을 추출합니다. DB의 `ilike`로는 초성 매칭이 불가능하기 때문에 클라이언트에서 처리합니다.
+
+```
+유니코드 공식: (초성 × 21 + 중성) × 28 + 종성 + 0xAC00
+
+"수강신청" → 초성 추출 → "ㅅㄱㅅㅊ"
+사용자 입력 "ㅅㄱ" → 전방 매칭으로 검색 성공
+```
+
+### 3. AI 컨텍스트 주입 — 벡터 RAG가 아닌 단순 방식을 선택한 이유
+
+이 프로젝트는 pgvector + 임베딩 기반 RAG가 아니라, **회사 FAQ 전체를 시스템 프롬프트에 직렬화해 주입하는 방식**을 사용합니다.
+
+| 항목 | 벡터 RAG | 컨텍스트 주입 (현재) |
+|------|---------|--------------------|
+| 인프라 | pgvector + 임베딩 파이프라인 | 일반 SQL SELECT |
+| 사전 처리 | FAQ 변경 시마다 임베딩 재생성 | 없음 |
+| 토큰 비용 | 관련 청크만 주입 → 대규모에 유리 | FAQ 100개 기준 ~수천 토큰 |
+| 적합한 규모 | 수천~수만 건 | **수십~수백 건 (현재 규모)** |
+| 구현 복잡도 | 높음 | 낮음 |
+
+현재 고객사의 FAQ는 100개 이하이므로 이 방식이 합리적입니다. FAQ가 수백 건을 넘어 토큰 비용이 문제가 되면 pgvector 기반으로 마이그레이션할 계획입니다.
+
+**Edge Function(`chat-ai`) 설계:**
+- Anthropic Prompt Caching(`cache_control: ephemeral`)으로 시스템 프롬프트 캐싱
+- 모델 분기: 회사별 구독 플랜 → 회사 AI 설정 → 기본값 순으로 모델 결정
+- IP 기반 Rate Limiting (분당 20회)
+- 토큰 사용량 로깅 (input/output/cached tokens)
+- 세션 격리: `supabase-public.ts` (persistSession: false) 사용
+
+### 4. TanStack Query v5 — Admin 서버 상태 캐싱
+
+Admin에서 `useState` + `useEffect`로 데이터를 fetch하면, 페이지 전환할 때마다 로딩이 발생합니다. TanStack Query를 도입해 캐싱과 무효화를 체계적으로 관리했습니다.
+
+```typescript
+// Query Key Factory — 계층적 키로 세밀한 캐시 무효화
+const adminKeys = {
+  all: ["admin"],
+  categories: (companyId) => [...adminKeys.all, "categories", companyId],
+  suggestions: (companyId) => [...adminKeys.all, "suggestions", companyId],
+};
+
+// staleTime: Infinity — mutation이 캐시 갱신을 전담
+// → 페이지 전환 시 캐시 히트로 즉시 렌더링
+```
+
+### 5. Tree Diff 기반 FAQ 저장
+
+FAQ 1개를 수정했는데 전체 트리를 DB에 저장하는 건 낭비입니다. 원본 트리와 편집 트리를 비교해서 변경된 노드만 서버에 보냅니다.
+
+```typescript
+// 1. 편집은 메모리 내 트리에서 수행
+// 2. 저장 시 isTreeEqual()로 원본과 비교
+// 3. computeTreeDiff()로 변경분만 추출 → { created, updated, deleted }
+// 4. 변경분만 DB에 반영
+```
+
+### 6. 서브도메인 기반 멀티테넌트
+
+```
+사용자 접속
+  → getSubdomainSlug() — hostname에서 서브도메인 추출
+    ├── kcie.goofitalk.co.kr → "kcie"
+    ├── aifa.localhost → "aifa"
+    ├── *.vercel.app → null (플랫폼 도메인 제외)
+    └── example.co.kr → null (한국 2차 도메인 처리)
+
+새 회사 추가:
+  1. /apply 페이지에서 서비스 신청 (셀프서비스)
+  2. 슈퍼관리자가 승인 (원클릭)
+  3. NGINX에 서브도메인 1줄 추가
+  → 애플리케이션 코드 수정 0줄
+```
+
+### 7. 서버 인프라 직접 구축
+
+Vercel 같은 매니지드 서비스에 의존하지 않고, 가비아 호스팅 서버에 NGINX를 직접 구축했습니다.
+
+```
+배포: npm run build → SCP 업로드 → NGINX 서빙
+NGINX: try_files (SPA 라우팅) + gzip + 서브도메인 와일드카드
+보안: Cloudflare DNS 프록시 → SSL 종단 + CDN + DDoS 방어
+```
+
+---
+
+## AI 기반 개발 프로세스
+
+이 프로젝트는 **Claude Code**를 코드 생성 도구가 아닌, 체계적인 개발 워크플로우로 활용했습니다. 프로젝트 규칙과 컨텍스트를 파일로 관리하여 AI가 프로젝트 컨벤션을 이해한 상태에서 작업합니다.
+
+### 프로젝트 구조
+
+```
+.claude/
+├── agents/                          # AI 서브에이전트 6개
+│   ├── code-reviewer.md             #   코드 리뷰 자동화
+│   ├── test-runner-fixer.md         #   테스트 실행 + 실패 시 자동 수정
+│   ├── react-supabase-fullstack.md  #   React + Supabase 풀스택 전문가
+│   ├── tanstack-query-migrator.md   #   TanStack Query 마이그레이션
+│   ├── development-planner.md       #   ROADMAP.md 관리
+│   └── prd-generator.md             #   PRD 문서 생성
+├── skills/                          # 커스텀 슬래시 명령어 4개
+│   ├── git-commit/                  #   /commit — 변경사항 분석 후 커밋
+│   ├── frontend-design/             #   /frontend-design — UI 컴포넌트 생성
+│   ├── readme/                      #   /readme — README 자동 생성
+│   └── roadmap-check/               #   /roadmap-check — 진행률 확인
+├── rules/                           # 프로젝트 규칙 6개 파일
+│   ├── 01-project-overview.md       #   기술 스택, Decision 트리
+│   ├── 02-coding-conventions.md     #   코드 스타일, 보안, 금지사항 12개
+│   ├── 03-chatbot-patterns.md       #   채팅 패턴, 검색 로직 (globs 조건부)
+│   ├── 04-admin-patterns.md         #   관리자 패턴, FAQ 관리 (globs 조건부)
+│   ├── 05-infrastructure.md         #   Edge Functions, Vite 번들 (globs 조건부)
+│   └── 06-testing.md                #   E2E 테스트 규칙 (globs 조건부)
+└── docs/                            # Claude Code 가이드
+```
+
+### 컨텍스트 윈도우 최적화
+
+AI는 매 요청마다 프로젝트 규칙을 읽습니다. 규칙 파일 6개를 YAML frontmatter `globs` 기반 조건부 로딩으로 구성하여, **작업 중인 파일과 관련된 규칙만 로드**합니다.
+
+- **항상 로드** (01, 02): 프로젝트 개요, 코드 스타일, 보안 규칙
+- **조건부 로드** (03~06): 챗봇 파일 작업 시 → 03, Admin 파일 작업 시 → 04, ...
+
+### Shrimp Task MCP
+
+MCP 기반 태스크 관리로 구조화된 워크플로우를 강제합니다.
+
+```
+plan_task → analyze_task → split_tasks → execute_task → verify_task
+                                                            │
+                                                  ROADMAP.md 자동 업데이트
+```
 
 ---
 
@@ -274,38 +250,48 @@ plan_task → analyze_task → split_tasks → execute_task → verify_task
 
 ```
 chatbot/
-│
 ├── src/
-│   ├── chatbot/              # 챗봇 모듈 (대화 UI, 검색 로직, 상태 관리)
-│   ├── admin/                # 관리자 모듈 (FAQ CRUD, 분석, 설정, 회사 관리)
-│   ├── pages/landing/        # 랜딩 페이지
-│   ├── hooks/                # 공유 훅 (FAQ 데이터, 회사 설정)
-│   ├── lib/                  # 공유 라이브러리 (Supabase, AI 클라이언트)
-│   ├── config/               # 회사 설정, 상수
-│   ├── types/                # TypeScript 타입 정의
-│   └── data/faq/             # 정적 FAQ 데이터 (폴백)
+│   ├── chatbot/                  # 챗봇 모듈
+│   │   ├── components/           #   채팅 UI (메시지, 입력, 검색 결과)
+│   │   ├── hooks/                #   use-chat-handlers, use-chat-search, use-chat-message
+│   │   ├── stores/               #   Zustand 3개 (message, navigation, search)
+│   │   └── utils/                #   초성 검색, 카테고리 아이콘
+│   │
+│   ├── admin/                    # 관리자 모듈
+│   │   ├── pages/                #   FAQ, 분석, AI 설정, 회사 관리
+│   │   ├── components/           #   트리 편집, DnD, 차트, 설정 폼
+│   │   ├── hooks/queries/        #   TanStack Query 훅
+│   │   ├── contexts/             #   AdminContext (역할 기반 접근 제어)
+│   │   └── lib/                  #   admin-api, tree-diff, tree-save
+│   │
+│   ├── hooks/                    # 공유 훅 (use-faq-data, use-company)
+│   ├── lib/                      # supabase, ai-client, faq-fetcher, sanitize
+│   ├── config/                   # 회사 설정, 상수
+│   ├── types/                    # TypeScript 타입 정의
+│   ├── data/faq/                 # 정적 FAQ 데이터 (오프라인 폴백)
+│   ├── pages/landing/            # 랜딩 페이지
+│   └── components/ui/            # shadcn 기반 공통 UI
 │
 ├── supabase/
-│   ├── functions/            # Edge Functions 6개 (chat-ai, signup, users 등)
-│   └── migrations/           # DB 마이그레이션 SQL
+│   ├── functions/                # Edge Functions 6개
+│   └── migrations/               # DB 마이그레이션
 │
-├── e2e/                      # Playwright E2E 테스트 21개
-│
-└── .claude/                  # AI 워크플로우 설정
-    ├── agents/               #   역할별 에이전트 8종
-    ├── skills/               #   커스텀 명령어 (/commit, /status)
-    ├── rules/                #   금지 패턴 13개, 코딩 컨벤션
-    └── docs/                 #   프로젝트 상세 문서 6개
+├── e2e/                          # Playwright E2E 테스트 (7개 spec, 20개 테스트)
+├── docs/                         # 프로젝트 문서 (PRD, 기술 결정, ROADMAP)
+└── CLAUDE.md                     # 프로젝트 메인 지침
 ```
 
 ---
 
-<p align="center">
-  <sub>기획 · 설계 · AI 활용 · 배포 · 운영 by</sub>&nbsp;
-  <strong>이태형</strong>&nbsp;
-  <sub>|</sub>&nbsp;
-  <sub>AI 워크플로우:</sub>&nbsp;
-  <img src="https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code" />&nbsp;
-  <sub>+</sub>&nbsp;
-  <img src="https://img.shields.io/badge/Shrimp_Task_MCP-191919?style=flat-square" alt="Shrimp" />
-</p>
+## 코드 품질
+
+| 영역 | 내용 |
+| --- | --- |
+| **단위 테스트** | Vitest 127개 — 초성 검색, Tree Diff, slug 유틸, 날짜 포맷 |
+| **E2E 테스트** | Playwright 20개 — 챗봇 플로우, 관리자 인증, Smoke |
+| **보안** | DOMPurify XSS 방어, Supabase 클라이언트 세션 격리 (관리자/챗봇 분리) |
+| **에러 복원력** | ErrorBoundary, Supabase 폴백, AI 호출 실패 시 안내 메시지 |
+| **접근성** | `role="log"`, `role="group"`, `aria-label` |
+| **타입 안전성** | strict 모드, any 타입 제거 |
+| **코드 품질** | Husky pre-commit 훅 + lint-staged |
+
